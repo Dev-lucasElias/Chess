@@ -15,4 +15,4 @@ class Player:
 		if isinstance(cor, str):
 			self.__cor = cor
 
-#primeiro commit
+#primeiro teste
