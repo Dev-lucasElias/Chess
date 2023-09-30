@@ -16,3 +16,4 @@ class Player:
 			self.__cor = cor
 
 #primeiro teste
+#segundo teste
