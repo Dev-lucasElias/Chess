@@ -4,7 +4,10 @@ from abc import ABC, abstractmethod
 class Peca(ABC):
     @abstractmethod
     def __init__(self, cor, tipo, posicao) -> None:
-        pass
+        if cor == 'branca' or cor == 'preta':
+            self.cor = cor
+        else:
+            raise ValueError('Cor invalida')
 
     @abstractmethod
     def possiveis_movimentos(self) -> list:
