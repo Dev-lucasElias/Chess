@@ -18,20 +18,27 @@ class Peca(ABC):
             raise ValueError('A posição deve ser uma lista com dois inteiros entre 0 e 7')
         self.__x = self.__posicao[0]
         self.__y = self.__posicao[1]
+        self.__tipo = None
+
 
 
     @abstractmethod
     def possiveis_movimentos(self) -> list:
-        movimentos = list()
+        #movimentos = list()
         #extend list
-        return movimentos
+        #return movimentos
+        pass
     
     @property
-    def cor(self):
+    def cor(self) -> str:
         return self.__cor
     
     @property
-    def posicao(self):
+    def tipo(self) -> str:
+        return self.__tipo
+    
+    @property
+    def posicao(self) -> list:
         return self.__posicao
     @posicao.setter
     def posicao(self, posicao: list):
@@ -45,14 +52,14 @@ class Peca(ABC):
             raise ValueError('A posição deve ser uma lista com dois inteiros entre 0 e 7')
 
 
-    def mover_reto_cima(self, casas) -> None:
-        tabuleiro = get_tabuleiro()
+    def mover_reto_cima(self, casas, tabuleiro_parametro) -> list:
+        tabuleiro = tabuleiro_parametro
         movimentos = list()
         x = self.__x
         y = self.__y
         for _ in range(casas):
             y -= 1
-            if x < 0:
+            if y < 0:
                 return movimentos
             if tabuleiro[x][y] == None:
                 movimentos.append([x,y])
@@ -63,14 +70,14 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_reto_baixo(self, casas) -> None:
-        tabuleiro = get_tabuleiro()
+    def mover_reto_baixo(self, casas, tabuleiro_parametro) -> list:
+        tabuleiro = tabuleiro_parametro
         movimentos = list()
         x = self.__x
         y = self.__y
         for _ in range(casas):
             y += 1
-            if x < 0:
+            if y > 7:
                 return movimentos
             if tabuleiro[x][y] == None:
                 movimentos.append([x,y])
@@ -81,8 +88,8 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_reto_esquerda(self, casas) -> None:
-        tabuleiro = get_tabuleiro()
+    def mover_reto_esquerda(self, casas, tabuleiro_parametro) -> list:
+        tabuleiro = tabuleiro_parametro
         movimentos = list()
         x = self.__x
         y = self.__y
@@ -99,14 +106,14 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_reto_direita(self, casas) -> None:
-        tabuleiro = get_tabuleiro()
+    def mover_reto_direita(self, casas, tabuleiro_parametro) -> list:
+        tabuleiro = tabuleiro_parametro
         movimentos = list()
         x = self.__x
         y = self.__y
         for _ in range(casas):
             x += 1
-            if x < 0:
+            if x > 7:
                 return movimentos
             if tabuleiro[x][y] == None:
                 movimentos.append([x,y])
@@ -117,14 +124,78 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_diagonal_esquerda_cima(self, casas) -> None:
-        pass
+    def mover_diagonal_esquerda_cima(self, casas, tabuleiro_parametro) -> list:
+        tabuleiro = tabuleiro_parametro
+        movimentos = list()
+        x = self.__x
+        y = self.__y
+        for _ in range(casas):
+            x -= 1
+            y -= 1
+            if (x < 0) or (y < 0):
+                return movimentos
+            if tabuleiro[x][y] == None:
+                movimentos.append([x,y])
+            else:
+                if tabuleiro[x][y].cor != self.cor:
+                    movimentos.append([x,y])
+                    return movimentos
+                return movimentos
+        return movimentos
 
-    def mover_diagonal_esquerda_baixo(self, casas) -> None:
-        pass
+    def mover_diagonal_esquerda_baixo(self, casas, tabuleiro_parametro) -> list:
+        tabuleiro = tabuleiro_parametro
+        movimentos = list()
+        x = self.__x
+        y = self.__y
+        for _ in range(casas):
+            x -= 1
+            y += 1
+            if (x < 0) or (y > 7):
+                return movimentos
+            if tabuleiro[x][y] == None:
+                movimentos.append([x,y])
+            else:
+                if tabuleiro[x][y].cor != self.cor:
+                    movimentos.append([x,y])
+                    return movimentos
+                return movimentos
+        return movimentos
 
-    def mover_diagonal_direita_cima(self, casas) -> None:
-        pass
+    def mover_diagonal_direita_cima(self, casas, tabuleiro_parametro) -> list:
+        tabuleiro = tabuleiro_parametro
+        movimentos = list()
+        x = self.__x
+        y = self.__y
+        for _ in range(casas):
+            x += 1
+            y -= 1
+            if (x > 7) or (y < 0):
+                return movimentos
+            if tabuleiro[x][y] == None:
+                movimentos.append([x,y])
+            else:
+                if tabuleiro[x][y].cor != self.cor:
+                    movimentos.append([x,y])
+                    return movimentos
+                return movimentos
+        return movimentos
 
-    def mover_diagonal_direita_baixo(self, casas) -> None:
-        pass
+    def mover_diagonal_direita_baixo(self, casas, tabuleiro_parametro) -> list:
+        tabuleiro = tabuleiro_parametro
+        movimentos = list()
+        x = self.__x
+        y = self.__y
+        for _ in range(casas):
+            x += 1
+            y += 1
+            if (x > 7) or (y > 7):
+                return movimentos
+            if tabuleiro[x][y] == None:
+                movimentos.append([x,y])
+            else:
+                if tabuleiro[x][y].cor != self.cor:
+                    movimentos.append([x,y])
+                    return movimentos
+                return movimentos
+        return movimentos
