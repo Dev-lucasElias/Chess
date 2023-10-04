@@ -18,11 +18,11 @@ class Peca(ABC):
             raise ValueError('A posição deve ser uma lista com dois inteiros entre 0 e 7')
         self.__tipo = None
 
-
-
     @abstractmethod
     def possiveis_movimentos(self) -> list:
         #movimentos = list()
+        #x = self.__posicao[0]
+        #y = self.__posicao[1]
         #extend list
         #return movimentos
         pass
@@ -50,11 +50,11 @@ class Peca(ABC):
             raise ValueError('A posição deve ser uma lista com dois inteiros entre 0 e 7')
 
 
-    def mover_reto_cima(self, casas, tabuleiro_parametro) -> list:
+    def mover_reto_cima(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
-        x = self.__posicao[0]
-        y = self.__posicao[1]
+        x = x_parametro
+        y = y_parametro
         for _ in range(casas):
             y -= 1
             if y < 0:
@@ -68,11 +68,11 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_reto_baixo(self, casas, tabuleiro_parametro) -> list:
+    def mover_reto_baixo(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
-        x = self.__posicao[0]
-        y = self.__posicao[1]
+        x = x_parametro
+        y = y_parametro
         for _ in range(casas):
             y += 1
             if y > 7:
@@ -86,11 +86,11 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_reto_esquerda(self, casas, tabuleiro_parametro) -> list:
+    def mover_reto_esquerda(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
-        x = self.__posicao[0]
-        y = self.__posicao[1]
+        x = x_parametro
+        y = y_parametro
         for _ in range(casas):
             x -= 1
             if x < 0:
@@ -104,11 +104,11 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_reto_direita(self, casas, tabuleiro_parametro) -> list:
+    def mover_reto_direita(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
-        x = self.__posicao[0]
-        y = self.__posicao[1]
+        x = x_parametro
+        y = y_parametro
         for _ in range(casas):
             x += 1
             if x > 7:
@@ -122,11 +122,11 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_diagonal_esquerda_cima(self, casas, tabuleiro_parametro) -> list:
+    def mover_diagonal_esquerda_cima(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
-        x = self.__posicao[0]
-        y = self.__posicao[1]
+        x = x_parametro
+        y = y_parametro
         for _ in range(casas):
             x -= 1
             y -= 1
@@ -141,11 +141,11 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_diagonal_esquerda_baixo(self, casas, tabuleiro_parametro) -> list:
+    def mover_diagonal_esquerda_baixo(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
-        x = self.__posicao[0]
-        y = self.__posicao[1]
+        x = x_parametro
+        y = y_parametro
         for _ in range(casas):
             x -= 1
             y += 1
@@ -160,11 +160,11 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_diagonal_direita_cima(self, casas, tabuleiro_parametro) -> list:
+    def mover_diagonal_direita_cima(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
-        x = self.__posicao[0]
-        y = self.__posicao[1]
+        x = x_parametro
+        y = y_parametro
         for _ in range(casas):
             x += 1
             y -= 1
@@ -179,11 +179,11 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_diagonal_direita_baixo(self, casas, tabuleiro_parametro) -> list:
+    def mover_diagonal_direita_baixo(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
-        x = self.__posicao[0]
-        y = self.__posicao[1]
+        x = x_parametro
+        y = y_parametro
         for _ in range(casas):
             x += 1
             y += 1
