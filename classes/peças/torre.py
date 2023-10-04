@@ -19,6 +19,7 @@ class Torre(Peca):
         y = self.posicao[1]
         movimentos = list()
         movimentos.extend(self.mover_reto_baixo(casas, tabuleiro, x, y))
-
-torre1 = Torre('branca',[0,0])
-print(torre1.possiveis_movimentos())
+        movimentos.extend(self.mover_reto_cima(casas, tabuleiro, x, y))
+        movimentos.extend(self.mover_reto_esquerda(casas, tabuleiro, x, y))
+        movimentos.extend(self.mover_reto_direita(casas, tabuleiro, x, y))
+        return movimentos
