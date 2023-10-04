@@ -1,0 +1,5 @@
+# Ignore the __pycache__ directory
+__pycache__/
+
+# Track all .py files in the 'classes/peças' directory
+!classes/peças/*.py
