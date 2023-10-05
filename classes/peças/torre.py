@@ -7,14 +7,7 @@ class Torre(Peca):
     
     def possiveis_movimentos(self) -> list:
         casas = 7
-        tabuleiro = [[None, None, None, None, None, None, None, None],
-                    [None, None, None, None, None, None, None, None],
-                    [None, None, None, None, None, None, None, None],
-                    [None, None, None, None, None, None, None, None],
-                    [None, None, None, None, None, None, None, None],
-                    [None, None, None, None, None, None, None, None],
-                    [None, None, None, None, None, None, None, None],
-                    [None, None, None, None, None, None, None, None]]
+        tabuleiro = controle_jogo.tabuleiro()
         x = self.posicao[0]
         y = self.posicao[1]
         movimentos = list()

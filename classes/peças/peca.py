@@ -122,7 +122,7 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_diagonal_esquerda_cima(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
+    def mover_diagonal_superior_esquerda(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
         x = x_parametro
@@ -141,7 +141,7 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_diagonal_esquerda_baixo(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
+    def mover_diagonal_inferior_esquerda(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
         x = x_parametro
@@ -160,7 +160,7 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_diagonal_direita_cima(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
+    def mover_diagonal_superior_direita(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
         x = x_parametro
@@ -179,7 +179,7 @@ class Peca(ABC):
                 return movimentos
         return movimentos
 
-    def mover_diagonal_direita_baixo(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
+    def mover_diagonal_inferior_direita(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
         x = x_parametro
