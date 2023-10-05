@@ -15,7 +15,7 @@ class Peao(Peca):
             if y < 0:
                 return movimentos
             if tabuleiro[x][y] == None:
-                movimentos.append([(self, casas: int, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:x,y])
+                movimentos.append([x,y])
             else:
                 return movimentos
         return movimentos
