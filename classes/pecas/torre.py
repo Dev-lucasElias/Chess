@@ -1,10 +1,14 @@
-from peca import Peca
+from pecas.peca import Peca
 
 class Torre(Peca):
     def __init__(self, cor: str, posicao: list) -> None:
         super().__init__(cor, posicao)
         self.__tipo = 'torre'
-    
+
+    @property
+    def tipo(self) -> str:
+        return self.__tipo
+
     def possiveis_movimentos(self) -> list:
         casas = 7
         tabuleiro = controle_jogo.tabuleiro()
