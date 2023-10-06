@@ -1,9 +1,13 @@
-from peca import Peca
+from pecas.peca import Peca
 
 class Cavalo(Peca):
     def __init__(self, cor: str, posicao: list) -> None:
         super().__init__(cor, posicao)
         self.__tipo = 'cavalo'
+
+    @property
+    def tipo(self) -> str:
+        return self.__tipo
 
     def mover_cima1_cavalo(self, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro

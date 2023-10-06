@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-
 class Peca(ABC):
     @abstractmethod
     def __init__(self, cor: str, posicao: list) -> None:
@@ -31,9 +30,9 @@ class Peca(ABC):
     def cor(self) -> str:
         return self.__cor
     
-    @property
+    @abstractmethod
     def tipo(self) -> str:
-        return self.__tipo
+        pass
     
     @property
     def posicao(self) -> list:
