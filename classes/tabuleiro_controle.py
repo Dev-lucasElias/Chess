@@ -10,6 +10,11 @@ class TabuleiroControle():
     def __init__(self) -> None:
         self.__tabuleiro = self.gerar_tabuleiro()
 
+    @property
+    def tabuleiro(self):
+        return self.__tabuleiro
+    
+
     def gerar_tabuleiro(self):
         tabuleiro = [[None, None, None, None, None, None, None, None],
                     [None, None, None, None, None, None, None, None],

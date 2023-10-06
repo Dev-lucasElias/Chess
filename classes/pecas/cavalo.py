@@ -153,8 +153,8 @@ class Cavalo(Peca):
                 return movimentos
         return movimentos
 
-    def possiveis_movimentos(self) -> list:
-        tabuleiro = controle_jogo.tabuleiro()
+    def possiveis_movimentos(self, tabuleiro_parametro: list) -> list:
+        tabuleiro = tabuleiro_parametro
         x = self.posicao[0]
         y = self.posicao[1]
         movimentos = list()

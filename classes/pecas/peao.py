@@ -71,9 +71,9 @@ class Peao(Peca):
                 return movimentos
         return movimentos
 
-    def possiveis_movimentos(self) -> list:
+    def possiveis_movimentos(self, tabuleiro_parametro: list) -> list:
         casas = 1
-        tabuleiro = controle_jogo.tabuleiro()
+        tabuleiro = tabuleiro_parametro
         x = self.posicao[0]
         y = self.posicao[1]
         movimentos = list()
