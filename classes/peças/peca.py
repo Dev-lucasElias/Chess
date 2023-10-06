@@ -4,10 +4,10 @@ from abc import ABC, abstractmethod
 class Peca(ABC):
     @abstractmethod
     def __init__(self, cor: str, posicao: list) -> None:
-        if cor == 'branca' or cor == 'preta':
+        if cor == 'branco' or cor == 'preto':
             self.__cor = cor
         else:
-            raise ValueError('A cor deve ser preta ou branca')
+            raise ValueError('A cor deve ser preto ou branco')
         if (
             isinstance(posicao, list) and
             len(posicao) == 2 and
