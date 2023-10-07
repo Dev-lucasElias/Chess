@@ -1,20 +1,19 @@
-from abc import ABC, abstractmethod
 
 class Player:
-	@abstractmethod
-	def __init__(self, cor: str):
-		if isinstance(cor, str):
-			self.__cor = cor
+	
+	def __init__(self,nome, cpf):
+		if isinstance(nome, str):
+			self.__nome = nome
+		if isinstance(cpf,int):
+			self.__cpf = cpf
 
 	@property
-	def cor(self) -> str:
-		return self.__cor
+	def nome(self) -> str:
+		return self.__nome
 	
-	@cor.setter
-	def cor(self, cor: str) -> None:
-		if isinstance(cor, str):
-			self.__cor = cor
+	@nome.setter
+	def nome(self, nome: str) -> None:
+		if isinstance(nome, str):
+			self.__nome = nome
 
-#primeiro teste
-#segundo teste
-#terceiro teste
+

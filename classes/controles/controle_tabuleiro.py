@@ -1,24 +1,30 @@
-<<<<<<< Updated upstream:classes/controles/controle_tabuleiro.py
 from modelos.pecas.bispo import Bispo
 from modelos.pecas.cavalo import Cavalo
 from modelos.pecas.peao import Peao
 from modelos.pecas.rainha import Rainha
 from modelos.pecas.rei import Rei
 from modelos.pecas.torre import Torre
-=======
-from classes.modelos.pecas.bispo import Bispo
-from classes.modelos.pecas.cavalo import Cavalo
-from classes.modelos.pecas.peao import Peao
-from classes.modelos.pecas.rainha import Rainha
-from classes.modelos.pecas.rei import Rei
-from classes.modelos.pecas.torre import Torre
->>>>>>> Stashed changes:classes/controles/tabuleiro_controle.py
-
+from classes.telas.tela_jogo import TelaJogo
+from classes.controles.controle_central import ControleCentral
 
 class ControleTabuleiro():
-    def __init__(self) -> None:
+    def __init__(self, controlador_central : ControleCentral) -> None:
         self.__tabuleiro = self.gerar_tabuleiro()
+        self.__tela_jogo = TelaJogo()
+        self.__controlador_central = controlador_central
 
+    def abre_tela_jogo(self):
+        while True:
+            opcao_escolhida = self.__tela_jogo.mostrar_opcoes()
+            if opcao_escolhida == 1:
+                self.gerar_tabuleiro()
+                break
+            elif opcao_escolhida == 2:
+                self.__controlador_central.inicia_programa()
+                break
+            else:
+                print("digite uma opcao valida! ")
+        
     def gerar_tabuleiro(self):
         tabuleiro = [[None, None, None, None, None, None, None, None],
                     [None, None, None, None, None, None, None, None],
