@@ -1,6 +1,6 @@
 
 
-class Tela_central:
+class TelaCentral:
     def __init__(self):
         pass
     

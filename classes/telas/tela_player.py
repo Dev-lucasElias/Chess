@@ -1,3 +1,3 @@
-class Tela_player:
+class TelaPlayer:
     def __init__():
         pass

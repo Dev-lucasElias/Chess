@@ -1,3 +1,3 @@
-class tela_jogo:
+class TelaJogo:
     def __init__():
         pass

@@ -1,12 +1,12 @@
-from pecas.bispo import Bispo
-from pecas.cavalo import Cavalo
-from pecas.peao import Peao
-from pecas.rainha import Rainha
-from pecas.rei import Rei
-from pecas.torre import Torre
+from modelos.pecas.bispo import Bispo
+from modelos.pecas.cavalo import Cavalo
+from modelos.pecas.peao import Peao
+from modelos.pecas.rainha import Rainha
+from modelos.pecas.rei import Rei
+from modelos.pecas.torre import Torre
 
 
-class TabuleiroControle():
+class ControleTabuleiro():
     def __init__(self) -> None:
         self.__tabuleiro = self.gerar_tabuleiro()
 
@@ -55,5 +55,5 @@ class TabuleiroControle():
                     print(f'{peca.cor[0]}{peca.tipo} ', end=' ')
             print('\n')
 
-tabuleiro = TabuleiroControle()
+tabuleiro = ControleTabuleiro()
 tabuleiro.display_tabuleiro()
