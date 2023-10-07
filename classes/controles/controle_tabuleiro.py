@@ -1,9 +1,18 @@
+<<<<<<< Updated upstream:classes/controles/controle_tabuleiro.py
 from modelos.pecas.bispo import Bispo
 from modelos.pecas.cavalo import Cavalo
 from modelos.pecas.peao import Peao
 from modelos.pecas.rainha import Rainha
 from modelos.pecas.rei import Rei
 from modelos.pecas.torre import Torre
+=======
+from classes.modelos.pecas.bispo import Bispo
+from classes.modelos.pecas.cavalo import Cavalo
+from classes.modelos.pecas.peao import Peao
+from classes.modelos.pecas.rainha import Rainha
+from classes.modelos.pecas.rei import Rei
+from classes.modelos.pecas.torre import Torre
+>>>>>>> Stashed changes:classes/controles/tabuleiro_controle.py
 
 
 class ControleTabuleiro():
