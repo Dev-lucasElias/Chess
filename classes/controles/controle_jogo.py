@@ -12,11 +12,16 @@ class ControleJogo():
     def __init__(self) -> None:
         self.__tabuleiro = self.gerar_tabuleiro()
         self.__tela_jogo = TelaJogo()
+        self.__turno = 0
         #self.__controlador_central = controlador_central
 
     @property
     def tabuleiro(self):
         return self.__tabuleiro
+    
+    @property
+    def turno(self):
+        return self.__turno
     
     #seta o atributo posicao de cada peca no tabuleiro para sua posicao [i][j] na matriz
     #sincronizando o atributo posicao com sua posicao real no tabuleiro
