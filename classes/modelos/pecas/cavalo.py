@@ -1,4 +1,4 @@
-from pecas.peca import Peca
+from classes.modelos.pecas.peca import Peca
 
 class Cavalo(Peca):
     def __init__(self, cor: str, posicao: list) -> None:
