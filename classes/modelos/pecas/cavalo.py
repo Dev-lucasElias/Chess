@@ -81,7 +81,7 @@ class Cavalo(Peca):
                 return movimentos
         return movimentos
 
-    def mover_esqueda1_cavalo(self, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
+    def mover_esquerda1_cavalo(self, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
         x = x_parametro
@@ -99,7 +99,7 @@ class Cavalo(Peca):
                 return movimentos
         return movimentos
 
-    def mover_esqueda2_cavalo(self, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
+    def mover_esquerda2_cavalo(self, tabuleiro_parametro: list, x_parametro: int, y_parametro: int) -> list:
         tabuleiro = tabuleiro_parametro
         movimentos = list()
         x = x_parametro

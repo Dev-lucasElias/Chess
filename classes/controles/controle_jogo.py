@@ -34,18 +34,6 @@ class ControleJogo():
                 else:
                     self.__tabuleiro[i][j].posicao = [i,j]
 
-    def abre_tela_jogo(self):
-        while True:
-            opcao_escolhida = self.__tela_jogo.mostrar_opcoes()
-            if opcao_escolhida == 1:
-                self.gerar_tabuleiro()
-                break
-            elif opcao_escolhida == 2:
-                self.__controlador_central.inicia_programa()
-                break
-            else:
-                print("digite uma opcao valida! ")
-
     def gerar_tabuleiro(self):
         tabuleiro = [[None, None, None, None, None, None, None, None],
                     [None, None, None, None, None, None, None, None],
@@ -81,6 +69,53 @@ class ControleJogo():
             tabuleiro[1][i] = Peao('preto', [1, i])
 
         return tabuleiro
+    
+    def verifica_cheque(self) -> bool:
+        ameacas_rei = list()
+        #verifica se as brancas estão em cheque
+        if self.__turno % 2 == 0:
+            for i in range(8):
+                for j in range(8):
+                    if self.__tabuleiro[i][j] != None:
+                        if self.__tabuleiro[i][j].tipo == 'rei':
+                            if self.__tabuleiro[i][j].cor == 'branco':
+                                posicao_rei = self.__tabuleiro[i][j].posicao
+                        else:
+                            if self.__tabuleiro[i][j].cor == 'preto':
+                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
+            for possivel_ameaca in ameacas_rei:
+                if possivel_ameaca == posicao_rei:
+                    return True
+            return False
+        #verifica se as pretas estão em cheque
+        if self.__turno % 2 != 0:
+            for i in range(8):
+                for j in range(8):
+                    if self.__tabuleiro[i][j] != None:
+                        if self.__tabuleiro[i][j].tipo == 'rei':
+                            if self.__tabuleiro[i][j].cor == 'preto':
+                                posicao_rei = self.__tabuleiro[i][j].posicao
+                        else:
+                            if self.__tabuleiro[i][j].cor == 'branco':
+                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
+            for possivel_ameaca in ameacas_rei:
+                if possivel_ameaca == posicao_rei:
+                    return True
+            return False
+        #if the code didnt work
+        return None
+
+    def abre_tela_jogo(self):
+        while True:
+            opcao_escolhida = self.__tela_jogo.mostrar_opcoes()
+            if opcao_escolhida == 1:
+                self.gerar_tabuleiro()
+                break
+            elif opcao_escolhida == 2:
+                self.__controlador_central.inicia_programa()
+                break
+            else:
+                print("digite uma opcao valida! ")
 
     #metodo temporario para testar tabuleiro, o método real ficara na tela tabuleiro
     def display_tabuleiro(self):
