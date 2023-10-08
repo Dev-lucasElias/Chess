@@ -1,17 +1,18 @@
-from modelos.pecas.bispo import Bispo
-from modelos.pecas.cavalo import Cavalo
-from modelos.pecas.peao import Peao
-from modelos.pecas.rainha import Rainha
-from modelos.pecas.rei import Rei
-from modelos.pecas.torre import Torre
+from classes.modelos.pecas.bispo import Bispo
+from classes.modelos.pecas.cavalo import Cavalo
+from classes.modelos.pecas.peao import Peao
+from classes.modelos.pecas.rainha import Rainha
+from classes.modelos.pecas.rei import Rei
+from classes.modelos.pecas.torre import Torre
 from classes.telas.tela_jogo import TelaJogo
-from classes.controles.controle_central import ControleCentral
+#from classes.controles.controle_central import ControleCentral
 
 class ControleTabuleiro():
-    def __init__(self, controlador_central : ControleCentral) -> None:
+    pass
+    def __init__(self) -> None:
         self.__tabuleiro = self.gerar_tabuleiro()
         self.__tela_jogo = TelaJogo()
-        self.__controlador_central = controlador_central
+        #self.__controlador_central = controlador_central
 
     @property
     def tabuleiro(self):

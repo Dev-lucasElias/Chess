@@ -1,7 +1,7 @@
 
-from controle_tabuleiro import ControleTabuleiro
-from controle_player import ControlePlayer
-from telas.tela_central import TelaCentral
+from classes.controles.controle_tabuleiro import ControleTabuleiro
+from classes.controles.controle_player import ControlePlayer
+from classes.telas.tela_central import TelaCentral
 
 
 class ControleCentral:
