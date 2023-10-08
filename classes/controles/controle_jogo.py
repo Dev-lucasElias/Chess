@@ -19,6 +19,7 @@ class ControleJogo():
     def tabuleiro(self):
         return self.__tabuleiro
     
+    #turno par = vez das brancas, turno impar = vez das pretas
     @property
     def turno(self):
         return self.__turno
