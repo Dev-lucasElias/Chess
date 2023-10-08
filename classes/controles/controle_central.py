@@ -1,5 +1,5 @@
 
-from classes.controles.controle_tabuleiro import ControleTabuleiro
+from classes.controles.controle_jogo import ControleJogo
 from classes.controles.controle_player import ControlePlayer
 from classes.telas.tela_central import TelaCentral
 
@@ -7,14 +7,14 @@ from classes.telas.tela_central import TelaCentral
 class ControleCentral:
     def __init__(self):
         self.__controle_player = ControlePlayer(self)
-        self.__controle_tabuleiro = ControleTabuleiro(self)
+        self.__controle_jogo = ControleJogo(self)
         self.__tela_central = TelaCentral()
 
     def chama_controlador_player(self):
         self.__controle_player.abre_tela_player()
 
     def chama_controlador_tabuleiro(self):
-        self.__controle_tabuleiro.abre_tela_tabuleiro()
+        self.__controle_jogo.abre_tela_jogo()
 
     def inicia_programa(self):
         while True:

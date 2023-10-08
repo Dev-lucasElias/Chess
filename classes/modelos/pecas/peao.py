@@ -19,7 +19,7 @@ class Peao(Peca):
                 y -= 1
             elif self.cor == 'preto':
                 y += 1
-            if y < 0:
+            if (y < 0) or (y > 7):
                 return movimentos
             if tabuleiro[x][y] == None:
                 movimentos.append([x,y])
@@ -38,7 +38,7 @@ class Peao(Peca):
                 y -= 1
             elif self.cor == 'preto':
                 y += 1
-            if (x < 0) or (y < 0):
+            if (x < 0) or (y < 0) or (y > 7):
                 return movimentos
             if tabuleiro[x][y] == None:
                 return movimentos
@@ -60,7 +60,7 @@ class Peao(Peca):
                 y -= 1
             elif self.cor == 'preto':
                 y += 1
-            if (x < 0) or (y < 0):
+            if (x < 0) or (y < 0) or (y > 7):
                 return movimentos
             if tabuleiro[x][y] == None:
                 return movimentos

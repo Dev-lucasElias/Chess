@@ -38,7 +38,7 @@ class Peca(ABC):
     def posicao(self) -> list:
         return self.__posicao
     @posicao.setter
-    def posicao(self, posicao: list):
+    def posicao(self, posicao: list) -> None:
         if (
             isinstance(posicao, list) and
             len(posicao) == 2 and
