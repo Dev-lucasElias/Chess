@@ -13,6 +13,10 @@ class ControleTabuleiro():
         self.__tela_jogo = TelaJogo()
         self.__controlador_central = controlador_central
 
+    @property
+    def tabuleiro(self):
+        return self.__tabuleiro
+
     def abre_tela_jogo(self):
         while True:
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes()
@@ -24,7 +28,7 @@ class ControleTabuleiro():
                 break
             else:
                 print("digite uma opcao valida! ")
-        
+
     def gerar_tabuleiro(self):
         tabuleiro = [[None, None, None, None, None, None, None, None],
                     [None, None, None, None, None, None, None, None],
@@ -69,6 +73,3 @@ class ControleTabuleiro():
                 else:
                     print(f'{peca.cor[0]}{peca.tipo} ', end=' ')
             print('\n')
-
-tabuleiro = ControleTabuleiro()
-tabuleiro.display_tabuleiro()
