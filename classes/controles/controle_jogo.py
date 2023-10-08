@@ -4,23 +4,33 @@ from classes.modelos.pecas.peao import Peao
 from classes.modelos.pecas.rainha import Rainha
 from classes.modelos.pecas.rei import Rei
 from classes.modelos.pecas.torre import Torre
-from classes.telas.tela_tabuleiro import TelaTabuleiro
+from classes.telas.tela_jogo import TelaJogo
 #from classes.controles.controle_central import ControleCentral
 
-class ControleTabuleiro():
+class ControleJogo():
     pass
     def __init__(self) -> None:
         self.__tabuleiro = self.gerar_tabuleiro()
-        self.__tela_tabuleiro = TelaTabuleiro()
+        self.__tela_jogo = TelaJogo()
         #self.__controlador_central = controlador_central
 
     @property
     def tabuleiro(self):
         return self.__tabuleiro
+    
+    #seta o atributo posicao de cada peca no tabuleiro para sua posicao [i][j] na matriz
+    #sincronizando o atributo posicao com sua posicao real no tabuleiro
+    def sincronizar_posicoes_tabuleiro(self) -> None:
+        for i in range(8):
+            for j in range(8):
+                if self.__tabuleiro[i][j] == None:
+                    pass
+                else:
+                    self.__tabuleiro[i][j].posicao = [i,j]
 
-    def abre_tela_tabuleiro(self):
+    def abre_tela_jogo(self):
         while True:
-            opcao_escolhida = self.__tela_tabuleiro.mostrar_opcoes()
+            opcao_escolhida = self.__tela_jogo.mostrar_opcoes()
             if opcao_escolhida == 1:
                 self.gerar_tabuleiro()
                 break
@@ -66,6 +76,7 @@ class ControleTabuleiro():
 
         return tabuleiro
 
+    #metodo temporario para testar tabuleiro, o método real ficara na tela tabuleiro
     def display_tabuleiro(self):
         for row in self.__tabuleiro:
             for peca in row:
