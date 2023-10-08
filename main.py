@@ -1,9 +1,5 @@
-from classes.controles.controle_tabuleiro import ControleTabuleiro
+from classes.controles.controle_central import ControleCentral
 
-tabuleiro = ControleTabuleiro()
-print(tabuleiro.tabuleiro)
-
-
-#if __name__ == "__main__":
-  #ControleCentral().inicia_programa()
+if __name__ == "__main__":
+  ControleCentral().inicia_programa()
 
