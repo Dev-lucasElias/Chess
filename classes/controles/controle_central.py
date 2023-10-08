@@ -14,7 +14,7 @@ class ControleCentral:
         self.__controle_player.abre_tela_player()
 
     def chama_controlador_tabuleiro(self):
-        self.__controle_tabuleiro.abre_tela_jogo()
+        self.__controle_tabuleiro.abre_tela_tabuleiro()
 
     def inicia_programa(self):
         while True:
