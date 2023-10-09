@@ -8,11 +8,23 @@ class TelaPlayer:
                                     
         1- Adicionar jogador
         2- excluir jogador
-        3- Voltar
+        3- Listar jogadores cadastrados
+        4- Voltar
                                     
     opção ecolhida: """))
         return opcao_escolhida
     
+    def listar_jogadores(self,lista):
+        if len(lista) > 0:
+            for pessoa in lista:
+                print(pessoa.nome)# montar uma lista
+            #chama função da tela
+            print("------------------")
+        else:
+            print("Não há jogadores cadastrados.")
+        
+        return
+
     def pergunta_dados(self):
         nome_novo_jogador = input("digite o nome do novo jogador: ")
         cpf_novo_jogador = input("Digite o cpf do novo jogador: ")

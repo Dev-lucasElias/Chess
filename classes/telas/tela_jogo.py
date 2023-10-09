@@ -10,3 +10,15 @@ class TelaJogo:
                                     
     opção ecolhida:"""))
         return opcao_escolhida
+    
+    def mostrar_tabuleiro(self, tabuleiro):
+        for row in tabuleiro:
+            for peca in row:
+                if peca is None:
+                    print('   .   ', end=' ')
+                else:
+                    if peca.tipo == "peao":
+                        print(f' {peca.cor[0]}{peca.tipo} ', end=' ')
+                    else:
+                        print(f'{peca.cor[0]}{peca.tipo} ', end=' ')
+            print('\n')

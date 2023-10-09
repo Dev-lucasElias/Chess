@@ -110,7 +110,9 @@ class ControleJogo():
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes()
             if opcao_escolhida == 1:
                 os.system('cls' if os.name == 'nt' else 'clear') or None
-                self.gerar_tabuleiro()
+                tabuleiro = self.gerar_tabuleiro()
+                self.__tela_jogo.mostrar_tabuleiro(tabuleiro)
+                self.abre_tela_jogo()
                 break
             elif opcao_escolhida == 2:
                 os.system('cls' if os.name == 'nt' else 'clear') or None

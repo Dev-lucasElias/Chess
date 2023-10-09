@@ -21,12 +21,10 @@ class ControleCentral:
         while True:
             opcao_escolhida = self.__tela_central.mostrar_opcoes()
             if opcao_escolhida == 1:
-                #self.clear_screen()
                 os.system('cls' if os.name == 'nt' else 'clear') or None
                 self.chama_controlador_player()
                 break
             elif opcao_escolhida == 2:
-                #self.clear_screen()
                 os.system('cls' if os.name == 'nt' else 'clear') or None
                 self.chama_controlador_tabuleiro()
                 break
