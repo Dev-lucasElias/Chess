@@ -5,15 +5,15 @@ from classes.modelos.pecas.rainha import Rainha
 from classes.modelos.pecas.rei import Rei
 from classes.modelos.pecas.torre import Torre
 from classes.telas.tela_jogo import TelaJogo
+import os
 #from classes.controles.controle_central import ControleCentral
 
 class ControleJogo():
-    pass
-    def __init__(self) -> None:
+    def __init__(self,controlador_central) -> None:
         self.__tabuleiro = self.gerar_tabuleiro()
         self.__tela_jogo = TelaJogo()
         self.__turno = 0
-        #self.__controlador_central = controlador_central
+        self.__controlador_central = controlador_central
 
     @property
     def tabuleiro(self):
@@ -109,13 +109,16 @@ class ControleJogo():
         while True:
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes()
             if opcao_escolhida == 1:
+                os.system('cls' if os.name == 'nt' else 'clear') or None
                 self.gerar_tabuleiro()
                 break
             elif opcao_escolhida == 2:
+                os.system('cls' if os.name == 'nt' else 'clear') or None
                 self.__controlador_central.inicia_programa()
                 break
             else:
                 print("digite uma opcao valida! ")
+                os.system('cls' if os.name == 'nt' else 'clear') or None
 
     #metodo temporario para testar tabuleiro, o método real ficara na tela tabuleiro
     def display_tabuleiro(self):

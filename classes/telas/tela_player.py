@@ -1,10 +1,16 @@
 class TelaPlayer:
     
     def mostrar_opcoes(self) -> int:
-        opcao_escolhida = input("""Escolha uma opcao:
-              1- Adicionar jogador
-              2- excluir jogador
-              3- Voltar""")
+        opcao_escolhida = int(input("""
+****  MENU PLAYER ****
+                                    
+    Escolha uma opcao:
+                                    
+        1- Adicionar jogador
+        2- excluir jogador
+        3- Voltar
+                                    
+    opção ecolhida: """))
         return opcao_escolhida
     
     def pergunta_dados(self):
