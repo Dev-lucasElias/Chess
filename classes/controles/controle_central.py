@@ -19,7 +19,7 @@ class ControleCentral:
 
     def inicia_programa(self):
         while True:
-            opcao_escolhida = self.__tela_central.mostrar_opcoes()
+            opcao_escolhida = self.__tela_central.mostrar_opcoes_iniciais()
             if opcao_escolhida == 1:
                 os.system('cls' if os.name == 'nt' else 'clear') or None
                 self.chama_controlador_player()

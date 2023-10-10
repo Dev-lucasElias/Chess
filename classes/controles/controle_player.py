@@ -31,7 +31,7 @@ class ControlePlayer:
 
     def abre_tela_player(self):
         while True:
-            opcao_escolhida = self.__tela_player.mostrar_opcoes()
+            opcao_escolhida = self.__tela_player.mostrar_opcoes_iniciais()
             if opcao_escolhida == 1: #adicionar player
                 os.system('cls' if os.name == 'nt' else 'clear') or None
                 self.adiciona_player()

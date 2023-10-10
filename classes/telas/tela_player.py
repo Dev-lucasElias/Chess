@@ -1,18 +1,14 @@
-class TelaPlayer:
+from classes.telas.tela import Tela
+
+class TelaPlayer(Tela):
+    def mostrar_opcoes(self, opcoes, tipo_menu) -> int:
+        return super().mostrar_opcoes(opcoes, tipo_menu)
     
-    def mostrar_opcoes(self) -> int:
-        opcao_escolhida = int(input("""
-****  MENU PLAYER ****
-                                    
-    Escolha uma opcao:
-                                    
-        1- Adicionar jogador
-        2- excluir jogador
-        3- Listar jogadores cadastrados
-        4- Voltar
-                                    
-    opção ecolhida: """))
+    def mostrar_opcoes_iniciais(self) -> int:
+        opcao_escolhida = self.mostrar_opcoes(["adicionar jogador","remover jogador", "listar jogador", "voltar"], "JOGADOR")
+        self.limpar_tela()
         return opcao_escolhida
+        
     
     def listar_jogadores(self,lista):
         if len(lista) > 0:
