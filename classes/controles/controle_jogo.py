@@ -105,6 +105,39 @@ class ControleJogo():
         #if the code didnt work
         return None
 
+    #deve ser executado somente se verifixar_cheque retornar true
+    def verifica_cheque_mate(self) -> bool:
+        ameacas_rei = list()
+        #verifica se as brancas tomaram cheque-mate
+        if self.__turno % 2 == 0:
+            for i in range(8):
+                for j in range(8):
+                    if self.__tabuleiro[i][j] != None:
+                        if self.__tabuleiro[i][j].tipo == 'rei':
+                            if self.__tabuleiro[i][j].cor == 'branco':
+                                movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro)
+                        else:
+                            if self.__tabuleiro[i][j].cor == 'preto':
+                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
+            for possivel_fuga in movimentos_rei:
+                if possivel_fuga not in ameacas_rei:
+                    return False
+            return True
+        #verifica se as pretas tomaram cheque-mate
+        if self.__turno % 2 != 0:
+            for i in range(8):
+                for j in range(8):
+                    if self.__tabuleiro[i][j] != None:
+                        if self.__tabuleiro[i][j].tipo == 'rei':
+                            if self.__tabuleiro[i][j].cor == 'preto':
+                                movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro)
+                        else:
+                            if self.__tabuleiro[i][j].cor == 'branco':
+                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
+            for possivel_fuga in movimentos_rei:
+                if possivel_fuga not in ameacas_rei:
+                    return False
+            return True
 
     def abre_tela_jogo(self):
         while True:
