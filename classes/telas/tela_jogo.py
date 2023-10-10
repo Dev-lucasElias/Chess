@@ -24,14 +24,15 @@ class TelaJogo(Tela):
             print('\n')
         #---- não trazer a entidade peca para a tela, apenas dados!.----
 
-    def mostrar_opcoes_Djogadas(self) -> int:
-        opcao_escolhida = int(input("""
-    ****  MENU JOGO ****
-                                        
-        Escolha uma opção:
-                                        
-            1- Movimentar uma peça
-            2- Desistir da partida
-                                        
-        opção ecolhida:"""))
+    def mostrar_opcoes(self, opcoes, tipo_menu) -> int:
+        return super().mostrar_opcoes(opcoes, tipo_menu)
+    
+    def mostrar_opcoes_iniciais(self) -> int:
+        opcao_escolhida = self.mostrar_opcoes([" Iniciar Partida"," voltar"], "JOGADOR")
+        self.limpar_tela()
+        return opcao_escolhida
+    
+    def mostrar_opcoes_jogadas(self) -> int:
+        opcao_escolhida = self.mostrar_opcoes(["Jogar"," Desistir da partida"],"JOGADAS")
+        self.limpar_tela()
         return opcao_escolhida

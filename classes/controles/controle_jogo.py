@@ -110,32 +110,28 @@ class ControleJogo():
         while True:
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes_iniciais()
             if opcao_escolhida == 1:
-                os.system('cls' if os.name == 'nt' else 'clear') or None #criar uma classe abstrata tela, herdando esse metodo para as demais telas
                 tabuleiro = self.gerar_tabuleiro()
                 #preparar um tabuleiro pra tela, extraindo os dados da entidade
                 self.__tela_jogo.mostrar_tabuleiro(tabuleiro)
-                self.abre_tela_jogo()
+                self.menu_jogadas()
                 break
             elif opcao_escolhida == 2:
-                os.system('cls' if os.name == 'nt' else 'clear') or None
                 self.__controlador_central.inicia_programa()
                 break
             else:
                 print("digite uma opcao valida! ")
-                os.system('cls' if os.name == 'nt' else 'clear') or None
 
     def menu_jogadas(self):
         while True:
-            opcao_escolhida = self.__tela_jogo.mostrar_opcoes_Djogadas()
-            if opcao_escolhida == 1:
+            opcao_escolhida = self.__tela_jogo.mostrar_opcoes_jogadas()
+            if opcao_escolhida == 1: 
                 #pedir posição inicial da peça escolhida
                 break
             elif opcao_escolhida == 2:
-                #cancela partida
+                #Desistir da partida partida
                 break
             else:
                 print("digite uma opcao valida! ")
-                os.system('cls' if os.name == 'nt' else 'clear') or None
 
     #metodo temporario para testar tabuleiro, o método real ficara na tela tabuleiro
     def display_tabuleiro(self):
