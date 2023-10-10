@@ -5,6 +5,7 @@ class TelaCentral(Tela):
         return super().mostrar_opcoes(opcoes, tipo_menu)
     
     def mostrar_opcoes_iniciais(self) -> int:
+        self.limpar_tela()
         opcao_escolhida = self.mostrar_opcoes(["Jogador","Partida"],"CENTRAL")
         self.limpar_tela()
         return opcao_escolhida
