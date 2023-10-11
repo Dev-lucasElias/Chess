@@ -16,6 +16,7 @@ class Tela(ABC):
                                             
         opcao_escolhida = int(input("""
             opção ecolhida:"""))
+        self.limpar_tela()
         return opcao_escolhida
 
     def limpar_tela(self):

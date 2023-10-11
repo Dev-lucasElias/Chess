@@ -5,7 +5,7 @@ class ControlePlayer:
 
     def __init__(self, controlador_central):
         self.__tela_player = TelaPlayer()
-        self.__lista_player = [Player]
+        self.__lista_player = []
         self.__controlador_central = controlador_central
 
     def adiciona_player(self):
@@ -27,8 +27,10 @@ class ControlePlayer:
 
 
     def abre_tela_player(self):
+        possiveis_escolhas = [" Adicionar jogador"," Remover jogador", " Listar jogador", " Voltara ao menu anterior"]
+        tipo_menu =  "JOGADOR"
         while True:
-            opcao_escolhida = self.__tela_player.mostrar_opcoes_iniciais()
+            opcao_escolhida = self.__tela_player.mostrar_opcoes(possiveis_escolhas,tipo_menu)
             if opcao_escolhida == 1: #adicionar player
                 self.adiciona_player()
                 break
