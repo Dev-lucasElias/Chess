@@ -107,8 +107,10 @@ class ControleJogo():
 
 
     def abre_tela_jogo(self):
+        possiveis_escolhas = [" Iniciar Partida"," voltar"]
+        tipo_menu = "JOGADOR"
         while True:
-            opcao_escolhida = self.__tela_jogo.mostrar_opcoes_iniciais()
+            opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu)
             if opcao_escolhida == 1:
                 tabuleiro = self.gerar_tabuleiro()
                 #preparar um tabuleiro pra tela, extraindo os dados da entidade
@@ -122,8 +124,10 @@ class ControleJogo():
                 print("digite uma opcao valida! ")
 
     def menu_jogadas(self):
+        possiveis_escolhas = [" Jogar"," Desistir da partida"]
+        tipo_menu = "JOGADAS"
         while True:
-            opcao_escolhida = self.__tela_jogo.mostrar_opcoes_jogadas()
+            opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu)
             if opcao_escolhida == 1: 
                 #pedir posição inicial da peça escolhida
                 break

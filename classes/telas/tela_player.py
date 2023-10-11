@@ -3,19 +3,22 @@ from classes.telas.tela import Tela
 class TelaPlayer(Tela):
     def mostrar_opcoes(self, opcoes, tipo_menu) -> int:
         return super().mostrar_opcoes(opcoes, tipo_menu)
-    
-    def mostrar_opcoes_iniciais(self) -> int:
-        opcao_escolhida = self.mostrar_opcoes(["adicionar jogador","remover jogador", "listar jogador", "voltar"], "JOGADOR")
-        self.limpar_tela()
-        return opcao_escolhida
         
     
     def listar_jogadores(self,lista):
-        if len(lista) > 0:
+        if len(lista) > 1:
+            print("""
+        LISTA DE JOGADORES
+                            
+    -------------------------
+                        """)
             for pessoa in lista:
-                print(pessoa.nome)# montar uma lista
+                print("       "+pessoa.nome)# montar uma lista
             #chama função da tela
-            print("------------------")
+            print("""
+                  
+   --------------------------
+                        """)
         else:
             print("Não há jogadores cadastrados.")
         

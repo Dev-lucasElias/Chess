@@ -17,8 +17,11 @@ class ControleCentral:
         self.__controle_jogo.abre_tela_jogo()
 
     def inicia_programa(self):
+        possiveis_escolhas = [" Menu Jogador"," Menu Partida"]
+        tipo_menu = "CENTRAL"
         while True:
-            opcao_escolhida = self.__tela_central.mostrar_opcoes_iniciais()
+            self.__tela_central.limpar_tela()
+            opcao_escolhida = self.__tela_central.mostrar_opcoes(possiveis_escolhas,tipo_menu)
             if opcao_escolhida == 1:
                 self.chama_controlador_player()
                 break
