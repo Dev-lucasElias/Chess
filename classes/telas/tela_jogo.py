@@ -6,18 +6,11 @@ class TelaJogo(Tela):
     def mostrar_opcoes(self, opcoes, tipo_menu) -> int:
         return super().mostrar_opcoes(opcoes, tipo_menu)
     
-    def mostrar_tabuleiro(self, tabuleiro):
-        for row in tabuleiro:
-            for peca in row:
-                if peca is None:
-                    print('   .   ', end=' ')
-                else:
-                    if peca.tipo == "peao":
-                        print(f' {peca.cor[0]}{peca.tipo} ', end=' ')
-                    else:
-                        print(f'{peca.cor[0]}{peca.tipo} ', end=' ')
+    def mostrar_tabuleiro(self, foto_matriz):
+        for linha in foto_matriz:
+            for posicao in linha:
+                    print(posicao, end=' ')
             print('\n')
-        #---- não trazer a entidade peca para a tela, apenas dados!.----
 
     def mostrar_opcoes(self, opcoes, tipo_menu) -> int:
         return super().mostrar_opcoes(opcoes, tipo_menu)

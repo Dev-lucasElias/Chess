@@ -147,7 +147,7 @@ class ControleJogo():
             if opcao_escolhida == 1:
                 tabuleiro = self.gerar_tabuleiro()
                 #preparar um tabuleiro pra tela, extraindo os dados da entidade
-                self.__tela_jogo.mostrar_tabuleiro(tabuleiro)
+                self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))#---AQUIIIIII
                 self.menu_jogadas()
                 break
             elif opcao_escolhida == 2:
@@ -155,6 +155,26 @@ class ControleJogo():
                 break
             else:
                 print("digite uma opcao valida! ")
+
+    def gerar_foto_tabuleiro(self, tabuleiro):
+        mesa = []
+        letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+        linha_superior = [f"   {letras[i]}   " for i in range(8)]
+        mesa.append(linha_superior)
+        for i,row in enumerate(tabuleiro):
+            linha = []  
+            for peca in row:
+                if peca is None:
+                    linha.append("   .   ")
+                else:
+                    if peca.tipo == "peao":
+                        linha.append(str(f' {peca.cor[0]}{peca.tipo} '))
+                    else:
+                        linha.append(str(f'{peca.cor[0]}{peca.tipo} '))
+            linha.append(f" {i+1}")
+            mesa.append(linha)
+        return  mesa
+        #---- não trazer a entidade peca para a tela, apenas dados!.----
 
     def menu_jogadas(self):
         possiveis_escolhas = [" Jogar"," Desistir da partida"]
