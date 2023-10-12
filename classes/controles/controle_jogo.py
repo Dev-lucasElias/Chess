@@ -89,7 +89,7 @@ class ControleJogo():
                                 posicao_rei = self.__tabuleiro[i][j].posicao
                         else:
                             if self.__tabuleiro[i][j].cor == 'preto':
-                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
+                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro))
             for possivel_ameaca in ameacas_rei:
                 if possivel_ameaca == posicao_rei:
                     return False, "Brancas"
@@ -104,7 +104,7 @@ class ControleJogo():
                                 posicao_rei = self.__tabuleiro[i][j].posicao
                         else:
                             if self.__tabuleiro[i][j].cor == 'branco':
-                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
+                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro))
             for possivel_ameaca in ameacas_rei:
                 if possivel_ameaca == posicao_rei:
                     return False, "Pretas"
@@ -122,10 +122,10 @@ class ControleJogo():
                     if self.__tabuleiro[i][j] != None:
                         if self.__tabuleiro[i][j].tipo == 'rei':
                             if self.__tabuleiro[i][j].cor == 'branco':
-                                movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro)
+                                movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro)
                         else:
                             if self.__tabuleiro[i][j].cor == 'preto':
-                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
+                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro))
             for possivel_fuga in movimentos_rei:
                 if possivel_fuga not in ameacas_rei:
                     return False, "Brancas"
@@ -137,10 +137,10 @@ class ControleJogo():
                     if self.__tabuleiro[i][j] != None:
                         if self.__tabuleiro[i][j].tipo == 'rei':
                             if self.__tabuleiro[i][j].cor == 'preto':
-                                movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro)
+                                movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro)
                         else:
                             if self.__tabuleiro[i][j].cor == 'branco':
-                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
+                                ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro))
             for possivel_fuga in movimentos_rei:
                 if possivel_fuga not in ameacas_rei:
                     return False, "Pretas"
@@ -150,7 +150,7 @@ class ControleJogo():
         possiveis_escolhas = [" Iniciar Partida"," voltar"]
         tipo_menu = "JOGADOR"
         while True:
-            opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu)
+            opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu, True)
             if opcao_escolhida == 1:
                 nome_jogador = self.__tela_jogo.solicitar_jogador()
                 jogador = self.__controlador_central.buscar_jogador(nome_jogador)
@@ -198,7 +198,7 @@ class ControleJogo():
         possiveis_escolhas = [" Jogar"," Desistir da partida"]
         tipo_menu = "JOGADAS"
         while True:
-            opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu)
+            opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu, False)
             if opcao_escolhida == 1: 
                 jogada_valida = False
                 while jogada_valida ==  False:
@@ -206,10 +206,10 @@ class ControleJogo():
                     self.__tela_jogo.notifica_usuario(msg,1.5)
                     if finalizou_ou_nao:
                         self.finalizar_partida()       
-                    time.sleep(random.uniform(0.5,2.5))
-                    self.mover_peca_bot()
-                    foto_tabuleiro = self.gerar_foto_tabuleiro(self.tabuleiro)
-                    self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
+                time.sleep(random.uniform(0.5,2.5))
+                self.mover_peca_bot()
+                foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
+                self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
             elif opcao_escolhida == 2:
                 self.finalizar_partida()
                 break
@@ -220,18 +220,18 @@ class ControleJogo():
     def mover_peca_bot(self):
         while True:
             lista_de_pecas = []
-            for linha in self.tabuleiro:
-                for coluna in linha:
-                    if self.tabuleiro[linha][coluna] != None and self.tabuleiro[linha][coluna].cor != "branco":
-                        peca = self.tabuleiro[linha][coluna]
+            for linha in range(8):
+                for coluna in range(8):
+                    if self.__tabuleiro[linha][coluna] != None and self.__tabuleiro[linha][coluna].cor != "branco":
+                        peca = self.__tabuleiro[linha][coluna]
                         lista_de_pecas.append(peca)
             peca_selecionada = random.choice(lista_de_pecas)
-            possiveis_movimentos = peca_selecionada.possiveis_movimentos(self.tabuleiro)
-            if possiveis_movimentos != None:
+            possiveis_movimentos = peca_selecionada.possiveis_movimentos(self.__tabuleiro)
+            if len(possiveis_movimentos) != 0:
                 break
         movimento_selecionado = random.choice(possiveis_movimentos)
-        x_inicial = peca.posicao[0]
-        y_inicial = peca.posicao[1]
+        x_inicial = peca_selecionada.posicao[0]
+        y_inicial = peca_selecionada.posicao[1]
         x_final = movimento_selecionado[0]
         y_final = movimento_selecionado[1]
         self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
@@ -276,17 +276,16 @@ class ControleJogo():
                 return False,'Já existe uma peça aliada nesta posição, seleciona uma posição válida', False
         self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
         self.__tabuleiro[x_inicial][y_inicial] = None
-        self.sincronizar_posicoes_tabuleiro()    
-        return True    
-        #self.__jogo_atual.registra_jogada(self.__jogador_atual,self.__tabuleiro[x_inicial][y_inicial],posicao_inicial,posicao_final,self.__tabuleiro)
-        #xeque,cor_em_xeque = self.verifica_cheque()
-        #xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
-        #if xeque:
-            #return True, f"Xeque nas {cor_em_xeque} !", False
-        #elif xeque_mate:
-            #return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
-        #else:
-            #return True, "Jogada efetuada. ", False
+        self.sincronizar_posicoes_tabuleiro()       
+        self.__jogo_atual.registra_jogada(self.__jogador_atual,self.__tabuleiro[x_inicial][y_inicial],posicao_inicial,posicao_final,self.__tabuleiro)
+        xeque,cor_em_xeque = self.verifica_cheque()
+        xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
+        if xeque:
+            return True, f"Xeque nas {cor_em_xeque} !", False
+        elif xeque_mate:
+            return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
+        else:
+            return True, "Jogada efetuada. ", False
 
 
     #metodo de teste

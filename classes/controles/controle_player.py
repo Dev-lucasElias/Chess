@@ -38,7 +38,7 @@ class ControlePlayer:
         possiveis_escolhas = [" Adicionar jogador"," Remover jogador", " Listar jogador", " Voltara ao menu anterior"]
         tipo_menu =  "JOGADOR"
         while True:
-            opcao_escolhida = self.__tela_player.mostrar_opcoes(possiveis_escolhas,tipo_menu)
+            opcao_escolhida = self.__tela_player.mostrar_opcoes(possiveis_escolhas,tipo_menu, True)
             if opcao_escolhida == 1: #adicionar player
                 self.adiciona_player()
                 break

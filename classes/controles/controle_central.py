@@ -25,7 +25,7 @@ class ControleCentral:
         tipo_menu = "CENTRAL"
         while True:
             self.__tela_central.limpar_tela()
-            opcao_escolhida = self.__tela_central.mostrar_opcoes(possiveis_escolhas,tipo_menu)
+            opcao_escolhida = self.__tela_central.mostrar_opcoes(possiveis_escolhas,tipo_menu, True)
             if opcao_escolhida == 1:
                 self.chama_controlador_player()
                 break

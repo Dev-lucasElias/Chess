@@ -38,7 +38,7 @@ class Peao(Peca):
                 x -= 1
             elif self.cor == 'preto':
                 x += 1
-            if (y < 0) or (x < 0) or (x > 7):
+            if (y < 0) or (x < 0) or (x > 7) or (y > 7):
                 return movimentos
             if tabuleiro[x][y] == None:
                 return movimentos
@@ -60,7 +60,7 @@ class Peao(Peca):
                 x -= 1
             elif self.cor == 'preto':
                 x += 1
-            if (y < 0) or (x < 0) or (x > 7):
+            if (y < 0) or (x < 0) or (x > 7) or (y > 7):
                 return movimentos
             if tabuleiro[x][y] == None:
                 return movimentos

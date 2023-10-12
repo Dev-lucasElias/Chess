@@ -4,8 +4,8 @@ import time
 
 class TelaJogo(Tela):
 
-    def mostrar_opcoes(self, opcoes, tipo_menu) -> int:
-        return super().mostrar_opcoes(opcoes, tipo_menu)
+    def mostrar_opcoes(self, opcoes, tipo_menu, limpar) -> int:
+        return super().mostrar_opcoes(opcoes, tipo_menu, limpar)
     
     def mostrar_tabuleiro(self, foto_matriz):
         for linha in foto_matriz:
@@ -13,11 +13,12 @@ class TelaJogo(Tela):
                     print(posicao, end=' ')
             print('\n')
 
-    def mostrar_opcoes(self, opcoes, tipo_menu) -> int:
-        return super().mostrar_opcoes(opcoes, tipo_menu)
+    def mostrar_opcoes(self, opcoes, tipo_menu, limpar) -> int:
+        return super().mostrar_opcoes(opcoes, tipo_menu, limpar)
     
     def solicitar_jogador(self) ->str:
         nome_jogador = input("por favor digite o nome do jogador para começar a partida: ")
+        self.limpar_tela()
         return nome_jogador
     
     def notifica_usuario(self, menssagem, tempo):
