@@ -90,8 +90,8 @@ class ControleJogo():
                                 ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
             for possivel_ameaca in ameacas_rei:
                 if possivel_ameaca == posicao_rei:
-                    return True
-            return False
+                    return False, "Brancas"
+            return True, "Brancas"
         #verifica se as pretas estão em cheque
         if self.__turno % 2 != 0:
             for i in range(8):
@@ -105,8 +105,8 @@ class ControleJogo():
                                 ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
             for possivel_ameaca in ameacas_rei:
                 if possivel_ameaca == posicao_rei:
-                    return True
-            return False
+                    return False, "Pretas"
+            return True, "Pretas"
         #if the code didnt work
         return None
 
@@ -126,8 +126,8 @@ class ControleJogo():
                                 ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
             for possivel_fuga in movimentos_rei:
                 if possivel_fuga not in ameacas_rei:
-                    return False
-            return True
+                    return False, "Brancas"
+            return True, "Brancas"
         #verifica se as pretas tomaram cheque-mate
         if self.__turno % 2 != 0:
             for i in range(8):
@@ -141,8 +141,8 @@ class ControleJogo():
                                 ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.tabuleiro))
             for possivel_fuga in movimentos_rei:
                 if possivel_fuga not in ameacas_rei:
-                    return False
-            return True
+                    return False, "Pretas"
+            return True, "Pretas"
 
     def abre_tela_jogo(self):
         possiveis_escolhas = [" Iniciar Partida"," voltar"]
@@ -191,20 +191,14 @@ class ControleJogo():
     def menu_jogadas(self):
         possiveis_escolhas = [" Jogar"," Desistir da partida"]
         tipo_menu = "JOGADAS"
-        Tabuleiro_atualizado = [] #precisamos gerar novo tabuleiro
         while True:
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu)
             if opcao_escolhida == 1: 
                 jogada_valida = False
                 while jogada_valida ==  False:
-                    posicao_escolhida_inicial = self.__tela_jogo.solicitar_posicao("inicial")
-                    if posicao_escolhida_inicial != None:
-                        peca_manipulada = self.descobre_peca_manipulada(posicao_escolhida_inicial)
-                        if peca_manipulada != None:
-                            posicao_escolhida_final = self.__tela_jogo.solicitar_posicao("final")
-                            if posicao_escolhida_final != None: #tem que ser None ou Uma peca de outra cor
-                                self.__jogo_atual.registra_jogada(self.__jogador_atual,peca_manipulada,posicao_escolhida_inicial, posicao_escolhida_final,Tabuleiro_atualizado)
-                                jogada_valida = True
+                    jogada_valida, msg = self.mover_peca_jogador()
+                    self.__tela_jogo.notifica_usuario(msg,3.0)
+
                         
                 break
             elif opcao_escolhida == 2:
@@ -225,19 +219,26 @@ class ControleJogo():
         x_final = posicao_final[0]
         y_final = posicao_final[1]
         if self.__tabuleiro[x_inicial][y_inicial] == None:
-            return 'A posição está vazia, selecione uma peça'
+            return False,'A posição está vazia, selecione uma peça'
         if self.__tabuleiro[x_inicial][y_inicial].cor != 'branco':
-            return 'A peça escolhida pertence ao jogador adversário, escolha uma peça branca'
+            return False,'A peça escolhida pertence ao jogador adversário, escolha uma peça branca'
         movimentos_peca = self.__tabuleiro[x_inicial][y_inicial].possiveis_movimentos(self.__tabuleiro)
         if posicao_final not in movimentos_peca:
-            return 'A peça não pode se mover para essa posição, selecione uma posição válida'
+            return False,'A peça não pode se mover para essa posição, selecione uma posição válida'
         if self.__tabuleiro[x_final][y_final] != None:
             if self.__tabuleiro[x_final][y_final].cor == 'branco':
-                return 'Já existe uma peça aliada nesta posição, seleciona uma posição válida'
+                return False,'Já existe uma peça aliada nesta posição, seleciona uma posição válida'
         self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
         self.__tabuleiro[x_inicial][y_inicial] = None
         self.sincronizar_posicoes_tabuleiro()
-        return True
+        xeque,cor_em_xeque = self.verifica_cheque()
+        xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
+        if xeque:
+            return True, f"Xeque nas {cor_em_xeque} !"
+        elif xeque_mate:
+            return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam"
+        else:
+            return True, "Jogada efetuada. "
 
     #metodo de teste
     def mostrar_tudo_teste(self):
