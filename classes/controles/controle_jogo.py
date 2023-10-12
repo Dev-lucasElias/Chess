@@ -154,7 +154,7 @@ class ControleJogo():
                 jogador = self.__controlador_central.buscar_jogador(nome_jogador)
                 tabuleiro = self.__tabuleiro
                 self.__jogo_atual = Jogo(jogador,tabuleiro)
-                self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))#---AQUIIIIII
+                self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))
 
                 self.menu_jogadas()
                 break
@@ -162,7 +162,8 @@ class ControleJogo():
                 self.__controlador_central.inicia_programa()
                 break
             else:
-                print("digite uma opcao valida! ")
+                msg = "digite uma opcao valida! "
+                self.__tela_jogo.notifica_usuario(msg,1.5)
 
     def gerar_foto_tabuleiro(self, tabuleiro):
         mesa = []
@@ -187,6 +188,9 @@ class ControleJogo():
         coluna = posicao_peca[0]
         linha = posicao_peca[1]
         return self.__tabuleiro[coluna][linha]
+    
+    def finalizar_partida(self):
+        pass
 
     def menu_jogadas(self):
         possiveis_escolhas = [" Jogar"," Desistir da partida"]
@@ -196,21 +200,31 @@ class ControleJogo():
             if opcao_escolhida == 1: 
                 jogada_valida = False
                 while jogada_valida ==  False:
-                    jogada_valida, msg = self.mover_peca_jogador()
-                    self.__tela_jogo.notifica_usuario(msg,3.0)
-
-                        
+                    jogada_valida, msg, finalizou_ou_nao = self.mover_peca_jogador()
+                    self.__tela_jogo.notifica_usuario(msg,1.5)
+                    if finalizou_ou_nao:
+                        self.finalizar_partida()       
+                    self.mover_peca_bot()
                 break
             elif opcao_escolhida == 2:
                 #Desistir da partida partida
                 break
             else:
-                print("digite uma opcao valida! ")
+                msg = "digite uma opcao valida! "
+                self.__tela_jogo.notifica_usuario(msg,1.5)
 
-    # Lucas, vai ser dificil implementar uma repetição dentro desse método, então tem que ser implementada por fora
-    # Pra ajudar, no lugar de retornar uma string falando que deu certo, vou retornar True quando der certo e uma
-    # frase quando der errado, aí na hora de repetir pro cara da pra fazer um if True: xxx, else:
-    # Ainda falta eu adicionar as jogadas
+    def mover_peca_bot(self):
+        #1 listar todas as pecas disponiveis pra jogar
+        #2 escolher de forma random uma delas
+        #3 Verificar possiveis movimentos
+        #4 se nulo, voltar ao passo 1 se verdadeiro  continuar
+        #5 escolher de forma random o movimento
+        #6 mover a peca
+        #7 gravar a jogada
+        #8 imprimir tabuleiro e passar a jogada pro usuario
+        pass
+     
+     
     def mover_peca_jogador(self):
         posicao_inicial = self.__tela_jogo.solicitar_posicao('inicial')
         posicao_final = self.__tela_jogo.solicitar_posicao('final')
@@ -230,7 +244,8 @@ class ControleJogo():
                 return False,'Já existe uma peça aliada nesta posição, seleciona uma posição válida'
         self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
         self.__tabuleiro[x_inicial][y_inicial] = None
-        self.sincronizar_posicoes_tabuleiro()
+        self.sincronizar_posicoes_tabuleiro()        
+        self.__jogo_atual.registra_jogada(self.__jogador_atual,self.__tabuleiro[x_inicial][y_inicial],posicao_inicial,posicao_final,self.__tabuleiro)
         xeque,cor_em_xeque = self.verifica_cheque()
         xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
         if xeque:
@@ -239,6 +254,7 @@ class ControleJogo():
             return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam"
         else:
             return True, "Jogada efetuada. "
+
 
     #metodo de teste
     def mostrar_tudo_teste(self):
