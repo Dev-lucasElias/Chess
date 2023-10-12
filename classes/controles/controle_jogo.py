@@ -152,7 +152,7 @@ class ControleJogo():
             if opcao_escolhida == 1:
                 nome_jogador = self.__tela_jogo.solicitar_jogador()
                 jogador = self.__controlador_central.buscar_jogador(nome_jogador)
-                tabuleiro = self.gerar_tabuleiro()
+                tabuleiro = self.__tabuleiro
                 self.__jogo_atual = Jogo(jogador,tabuleiro)
                 self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))#---AQUIIIIII
 
@@ -212,3 +212,57 @@ class ControleJogo():
                 break
             else:
                 print("digite uma opcao valida! ")
+
+    # Lucas, vai ser dificil implementar uma repetição dentro desse método, então tem que ser implementada por fora
+    # Pra ajudar, no lugar de retornar uma string falando que deu certo, vou retornar True quando der certo e uma
+    # frase quando der errado, aí na hora de repetir pro cara da pra fazer um if True: xxx, else:
+    # Ainda falta eu adicionar as jogadas
+    def mover_peca_jogador(self):
+        posicao_inicial = self.__tela_jogo.solicitar_posicao('inicial')
+        posicao_final = self.__tela_jogo.solicitar_posicao('final')
+        x_inicial = posicao_inicial[0]
+        y_inicial = posicao_inicial[1]
+        x_final = posicao_final[0]
+        y_final = posicao_final[1]
+        if self.__tabuleiro[x_inicial][y_inicial] == None:
+            return 'A posição está vazia, selecione uma peça'
+        if self.__tabuleiro[x_inicial][y_inicial].cor != 'branco':
+            return 'A peça escolhida pertence ao jogador adversário, escolha uma peça branca'
+        movimentos_peca = self.__tabuleiro[x_inicial][y_inicial].possiveis_movimentos(self.__tabuleiro)
+        if posicao_final not in movimentos_peca:
+            return 'A peça não pode se mover para essa posição, selecione uma posição válida'
+        if self.__tabuleiro[x_final][y_final] != None:
+            if self.__tabuleiro[x_final][y_final].cor == 'branco':
+                return 'Já existe uma peça aliada nesta posição, seleciona uma posição válida'
+        self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
+        self.__tabuleiro[x_inicial][y_inicial] = None
+        self.sincronizar_posicoes_tabuleiro()
+        return True
+
+    #metodo de teste
+    def mostrar_tudo_teste(self):
+        x = self.gerar_foto_tabuleiro(self.__tabuleiro)
+        self.__tela_jogo.mostrar_tabuleiro(x)
+    #metodo de test
+    def mover_peca_jogador_teste(self, posicao_inicial, posicao_final):
+        posicao_inicial = posicao_inicial
+        posicao_final = posicao_final
+        x_inicial = posicao_inicial[0]
+        y_inicial = posicao_inicial[1]
+        x_final = posicao_final[0]
+        y_final = posicao_final[1]
+        if self.__tabuleiro[x_inicial][y_inicial] == None:
+            return 'A posição está vazia, selecione uma peça'
+        if self.__tabuleiro[x_inicial][y_inicial].cor != 'branco':
+            return 'A peça escolhida pertence ao jogador adversário, escolha uma peça branca'
+        movimentos_peca = self.__tabuleiro[x_inicial][y_inicial].possiveis_movimentos(self.__tabuleiro)
+        print(movimentos_peca)
+        if posicao_final not in movimentos_peca:
+            return 'A peça não pode se mover para essa posição, selecione uma posição válida'
+        if self.__tabuleiro[x_final][y_final] != None:
+            if self.__tabuleiro[x_final][y_final].cor == 'branco':
+                return 'Já existe uma peça aliada nesta posição, seleciona uma posição válida'
+        self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
+        self.__tabuleiro[x_inicial][y_inicial] = None
+        self.sincronizar_posicoes_tabuleiro()
+        return True

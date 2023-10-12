@@ -16,10 +16,10 @@ class Peao(Peca):
         y = y_parametro
         for _ in range(casas):
             if self.cor == 'branco':
-                y -= 1
+                x -= 1
             elif self.cor == 'preto':
-                y += 1
-            if (y < 0) or (y > 7):
+                x += 1
+            if (x < 0) or (x > 7):
                 return movimentos
             if tabuleiro[x][y] == None:
                 movimentos.append([x,y])
@@ -33,12 +33,12 @@ class Peao(Peca):
         x = x_parametro
         y = y_parametro
         for _ in range(casas):
-            x -= 1
+            y -= 1
             if self.cor == 'branco':
-                y -= 1
+                x -= 1
             elif self.cor == 'preto':
-                y += 1
-            if (x < 0) or (y < 0) or (y > 7):
+                x += 1
+            if (y < 0) or (x < 0) or (x > 7):
                 return movimentos
             if tabuleiro[x][y] == None:
                 return movimentos
@@ -55,12 +55,12 @@ class Peao(Peca):
         x = x_parametro
         y = y_parametro
         for _ in range(casas):
-            x += 1
+            y += 1
             if self.cor == 'branco':
-                y -= 1
+                x -= 1
             elif self.cor == 'preto':
-                y += 1
-            if (x < 0) or (y < 0) or (y > 7):
+                x += 1
+            if (y < 0) or (x < 0) or (x > 7):
                 return movimentos
             if tabuleiro[x][y] == None:
                 return movimentos
