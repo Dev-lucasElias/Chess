@@ -19,6 +19,9 @@ class TelaJogo(Tela):
         nome_jogador = input("por favor digite o nome do jogador para começar a partida: ")
         return nome_jogador
     
+    #tem que converter também de 1 a 8 para 0 a 7
+    #outro problema, toda a lógica de movimentação das peças é baseada em linha e coluna, mas o player está dando coluna e linha
+    #Teria que ser a ocontrario para a movimentação funcionar, onde o player primeiro seleciona a linha e depois a coluna
     def solicitar_posicao(self, tipo) -> str:
         while True:
             in_posicao_escolhida = input(f"Posiçao {tipo}: ").lower().strip()
@@ -49,7 +52,7 @@ class TelaJogo(Tela):
                     break
             else:
                 print("posição não faz parte do tabuleiro! tente denovo.")
-        posicao_escolhida = (int(in_posicao_escolhida[0]), int(in_posicao_escolhida[1]))
+        posicao_escolhida = [int(in_posicao_escolhida[0]), int(in_posicao_escolhida[1])]
         return posicao_escolhida
         
         
