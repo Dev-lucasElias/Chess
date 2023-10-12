@@ -23,6 +23,7 @@ class TelaJogo(Tela):
     def notifica_usuario(self, menssagem, tempo):
         print(f"{menssagem}")
         time.sleep(tempo)
+
     
     #tem que converter também de 1 a 8 para 0 a 7
     #outro problema, toda a lógica de movimentação das peças é baseada em linha e coluna, mas o player está dando coluna e linha

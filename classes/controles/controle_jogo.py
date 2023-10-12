@@ -8,7 +8,8 @@ from classes.telas.tela_jogo import TelaJogo
 from classes.modelos.jogo import Jogo
 from classes.modelos.player import Player
 #from classes.controles.controle_player import Player
-import os
+import random
+import time
 #from classes.controles.controle_central import ControleCentral
 
 class ControleJogo():
@@ -19,6 +20,7 @@ class ControleJogo():
         self.__controlador_central = controlador_central
         self.__jogador_atual = None
         self.__jogo_atual = None
+        self.__bot = Player("BOT", "000000000")
 
     @property
     def tabuleiro(self):
@@ -204,16 +206,46 @@ class ControleJogo():
                     self.__tela_jogo.notifica_usuario(msg,1.5)
                     if finalizou_ou_nao:
                         self.finalizar_partida()       
+                    time.sleep(random.uniform(0.5,2.5))
                     self.mover_peca_bot()
-                break
+                    foto_tabuleiro = self.gerar_foto_tabuleiro(self.tabuleiro)
+                    self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
             elif opcao_escolhida == 2:
-                #Desistir da partida partida
+                self.finalizar_partida()
                 break
             else:
                 msg = "digite uma opcao valida! "
                 self.__tela_jogo.notifica_usuario(msg,1.5)
 
     def mover_peca_bot(self):
+        while True:
+            lista_de_pecas = []
+            for linha in self.tabuleiro:
+                for coluna in linha:
+                    if self.tabuleiro[linha][coluna] != None and self.tabuleiro[linha][coluna].cor != "branco":
+                        peca = self.tabuleiro[linha][coluna]
+                        lista_de_pecas.append(peca)
+            peca_selecionada = random.choice(lista_de_pecas)
+            possiveis_movimentos = peca_selecionada.possiveis_movimentos(self.tabuleiro)
+            if possiveis_movimentos != None:
+                break
+        movimento_selecionado = random.choice(possiveis_movimentos)
+        x_inicial = peca.posicao[0]
+        y_inicial = peca.posicao[1]
+        x_final = movimento_selecionado[0]
+        y_final = movimento_selecionado[1]
+        self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
+        self.__tabuleiro[x_inicial][y_inicial] = None
+        self.sincronizar_posicoes_tabuleiro()        #TEM QUE CADASTRAR O BOT
+        self.__jogo_atual.registra_jogada(self.__bot,peca,peca.posicao,movimento_selecionado,self.__tabuleiro)
+        xeque,cor_em_xeque = self.verifica_cheque()
+        xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
+        if xeque:
+            return True, f"Xeque nas {cor_em_xeque} !"
+        elif xeque_mate:
+            return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam"
+        else:
+            return True, "Jogada efetuada. "
         #1 listar todas as pecas disponiveis pra jogar
         #2 escolher de forma random uma delas
         #3 Verificar possiveis movimentos
@@ -222,7 +254,7 @@ class ControleJogo():
         #6 mover a peca
         #7 gravar a jogada
         #8 imprimir tabuleiro e passar a jogada pro usuario
-        pass
+        
      
      
     def mover_peca_jogador(self):
@@ -233,15 +265,15 @@ class ControleJogo():
         x_final = posicao_final[0]
         y_final = posicao_final[1]
         if self.__tabuleiro[x_inicial][y_inicial] == None:
-            return False,'A posição está vazia, selecione uma peça'
+            return False,'A posição está vazia, selecione uma peça', False
         if self.__tabuleiro[x_inicial][y_inicial].cor != 'branco':
-            return False,'A peça escolhida pertence ao jogador adversário, escolha uma peça branca'
+            return False,'A peça escolhida pertence ao jogador adversário, escolha uma peça branca', False
         movimentos_peca = self.__tabuleiro[x_inicial][y_inicial].possiveis_movimentos(self.__tabuleiro)
         if posicao_final not in movimentos_peca:
-            return False,'A peça não pode se mover para essa posição, selecione uma posição válida'
+            return False,'A peça não pode se mover para essa posição, selecione uma posição válida', False
         if self.__tabuleiro[x_final][y_final] != None:
             if self.__tabuleiro[x_final][y_final].cor == 'branco':
-                return False,'Já existe uma peça aliada nesta posição, seleciona uma posição válida'
+                return False,'Já existe uma peça aliada nesta posição, seleciona uma posição válida', False
         self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
         self.__tabuleiro[x_inicial][y_inicial] = None
         self.sincronizar_posicoes_tabuleiro()        
@@ -249,11 +281,11 @@ class ControleJogo():
         xeque,cor_em_xeque = self.verifica_cheque()
         xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
         if xeque:
-            return True, f"Xeque nas {cor_em_xeque} !"
+            return True, f"Xeque nas {cor_em_xeque} !", False
         elif xeque_mate:
-            return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam"
+            return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
         else:
-            return True, "Jogada efetuada. "
+            return True, "Jogada efetuada. ", False
 
 
     #metodo de teste
