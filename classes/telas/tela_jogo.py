@@ -19,9 +19,9 @@ class TelaJogo(Tela):
         nome_jogador = input("por favor digite o nome do jogador para começar a partida: ")
         return nome_jogador
     
-    def solicitar_posicao_inicial(self) -> str:
+    def solicitar_posicao(self, tipo) -> str:
         while True:
-            in_posicao_escolhida = input("Posiçao inicial: ").lower().strip()
+            in_posicao_escolhida = input(f"Posiçao {tipo}: ").lower().strip()
             if len(in_posicao_escolhida) <= 2:
                 if in_posicao_escolhida[0] == "a":
                     in_posicao_escolhida = in_posicao_escolhida.replace( "a","0")

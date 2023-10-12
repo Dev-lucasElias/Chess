@@ -8,6 +8,17 @@ class Jogo:
         self.__historico_jogadas = []
         self.__resultado_tabuleiro = tabuleiro
 
-    def registra_jogada(self, jogador,peca, posicao_inical, posicao_final):
-        jogada = Jogada(jogador, peca, posicao_inical, posicao_final)
+    @property
+    def resultado_tabuleiro(self) -> list:
+        return self.__resultado_tabuleiro
+	
+    @resultado_tabuleiro.setter
+    def resultado_tabuleiro(self, resultado_tabuleiro) -> None:
+        if isinstance(resultado_tabuleiro, list):
+            self.__resultado_tabuleiro = resultado_tabuleiro
+
+    def registra_jogada(self, jogador,peca, posicao_inical, posicao_final, resultado_tabuleiro):
+        jogada = Jogada(jogador, peca, posicao_inical, posicao_final, resultado_tabuleiro)
         self.__historico_jogadas.append(jogada)
+        self.__turnoAtual += 1
+        self.resultado_tabuleiro = resultado_tabuleiro

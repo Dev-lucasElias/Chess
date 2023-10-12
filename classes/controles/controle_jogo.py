@@ -182,15 +182,30 @@ class ControleJogo():
             linha.append(f" {i+1}")
             mesa.append(linha)
         return  mesa
+    
+    def descobre_peca_manipulada(self, posicao_peca):
+        coluna = posicao_peca[0]
+        linha = posicao_peca[1]
+        return self.__tabuleiro[coluna][linha]
 
     def menu_jogadas(self):
         possiveis_escolhas = [" Jogar"," Desistir da partida"]
         tipo_menu = "JOGADAS"
+        Tabuleiro_atualizado = [] #precisamos gerar novo tabuleiro
         while True:
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu)
             if opcao_escolhida == 1: 
-                posicao_escolhida = self.__tela_jogo.solicitar_posicao_inicial()
-                #continuar depois. AJUSTAR PRIMEIRO A CLASSE PARTIDA
+                jogada_valida = False
+                while jogada_valida ==  False:
+                    posicao_escolhida_inicial = self.__tela_jogo.solicitar_posicao("inicial")
+                    if posicao_escolhida_inicial != None:
+                        peca_manipulada = self.descobre_peca_manipulada(posicao_escolhida_inicial)
+                        if peca_manipulada != None:
+                            posicao_escolhida_final = self.__tela_jogo.solicitar_posicao("final")
+                            if posicao_escolhida_final != None: #tem que ser None ou Uma peca de outra cor
+                                self.__jogo_atual.registra_jogada(self.__jogador_atual,peca_manipulada,posicao_escolhida_inicial, posicao_escolhida_final,Tabuleiro_atualizado)
+                                jogada_valida = True
+                        
                 break
             elif opcao_escolhida == 2:
                 #Desistir da partida partida
