@@ -52,7 +52,7 @@ class TelaJogo(Tela):
                     break
             else:
                 print("posição não faz parte do tabuleiro! tente denovo.")
-        posicao_escolhida = [int(in_posicao_escolhida[0]), int(in_posicao_escolhida[1])]
+        posicao_escolhida = [int(in_posicao_escolhida[1]), int(in_posicao_escolhida[0])]
         return posicao_escolhida
         
         
