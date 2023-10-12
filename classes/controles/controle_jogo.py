@@ -5,6 +5,9 @@ from classes.modelos.pecas.rainha import Rainha
 from classes.modelos.pecas.rei import Rei
 from classes.modelos.pecas.torre import Torre
 from classes.telas.tela_jogo import TelaJogo
+from classes.modelos.jogo import Jogo
+from classes.modelos.player import Player
+#from classes.controles.controle_player import Player
 import os
 #from classes.controles.controle_central import ControleCentral
 
@@ -14,6 +17,8 @@ class ControleJogo():
         self.__tela_jogo = TelaJogo()
         self.__turno = 0
         self.__controlador_central = controlador_central
+        self.__jogador_atual = None
+        self.__jogo_atual = None
 
     @property
     def tabuleiro(self):
@@ -145,9 +150,12 @@ class ControleJogo():
         while True:
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu)
             if opcao_escolhida == 1:
+                nome_jogador = self.__tela_jogo.solicitar_jogador()
+                jogador = self.__controlador_central.buscar_jogador(nome_jogador)
                 tabuleiro = self.gerar_tabuleiro()
-                #preparar um tabuleiro pra tela, extraindo os dados da entidade
+                self.__jogo_atual = Jogo(jogador,tabuleiro)
                 self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))#---AQUIIIIII
+
                 self.menu_jogadas()
                 break
             elif opcao_escolhida == 2:
@@ -174,7 +182,6 @@ class ControleJogo():
             linha.append(f" {i+1}")
             mesa.append(linha)
         return  mesa
-        #---- não trazer a entidade peca para a tela, apenas dados!.----
 
     def menu_jogadas(self):
         possiveis_escolhas = [" Jogar"," Desistir da partida"]
@@ -182,20 +189,11 @@ class ControleJogo():
         while True:
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu)
             if opcao_escolhida == 1: 
-                #pedir posição inicial da peça escolhida
+                posicao_escolhida = self.__tela_jogo.solicitar_posicao_inicial()
+                #continuar depois. AJUSTAR PRIMEIRO A CLASSE PARTIDA
                 break
             elif opcao_escolhida == 2:
                 #Desistir da partida partida
                 break
             else:
                 print("digite uma opcao valida! ")
-
-    #metodo temporario para testar tabuleiro, o método real ficara na tela tabuleiro
-    def display_tabuleiro(self):
-        for row in self.__tabuleiro:
-            for peca in row:
-                if peca is None:
-                    print('  .  ', end=' ')
-                else:
-                    print(f'{peca.cor[0]}{peca.tipo} ', end=' ')
-            print('\n')

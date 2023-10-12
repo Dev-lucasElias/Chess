@@ -15,6 +15,10 @@ class ControleCentral:
 
     def chama_controlador_tabuleiro(self):
         self.__controle_jogo.abre_tela_jogo()
+    
+    def buscar_jogador(self,nome_jogador):
+        jogador = self.__controle_player.consultar_jogador(nome_jogador)
+        return jogador
 
     def inicia_programa(self):
         possiveis_escolhas = [" Menu Jogador"," Menu Partida"]

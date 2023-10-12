@@ -23,6 +23,14 @@ class ControlePlayer:
 
     def voltar_menu_central(self):
         self.__controlador_central.inicia_programa()
+    
+    def consultar_jogador(self,str_nome):
+        jogador = None
+        for i, pessoa in enumerate(self.__lista_player):
+            if pessoa.nome == str_nome:
+                jogador = pessoa
+                break
+        return jogador
 
 
 
