@@ -18,8 +18,9 @@ class ControleJogo():
         self.__tela_jogo = TelaJogo()
         self.__controlador_central = controlador_central
         self.__jogador_atual = None
-        self.__jogo_atual = None
+        self.__jogo_atual = Player()
         self.__bot = Player("BOT", "000000000")
+        self.__historico_partidas = []
 
     @property
     def tabuleiro(self):
@@ -152,6 +153,7 @@ class ControleJogo():
                 tabuleiro = self.__tabuleiro
                 self.__jogo_atual = Jogo(jogador,tabuleiro)
                 self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))
+
                 self.menu_jogadas()
                 break
             elif opcao_escolhida == 2:
@@ -185,8 +187,11 @@ class ControleJogo():
         linha = posicao_peca[1]
         return self.__tabuleiro[coluna][linha]
     
-    def finalizar_partida(self):
-        pass
+    def finalizar_partida(self,quem_ganhou, motivo):
+        self.__historico_partidas.append(self.__jogo_atual)
+        self.__jogo_atual.fechar_jogo(quem_ganhou, motivo)
+        self.__tela_jogo.gerar_relatorio(self.__jogador_atual.nome,quem_ganhou, motivo, self.__jogo_atual.historico_jogadas, self.__jogo_atual.turno_atual)
+        self.abre_tela_jogo()
 
     def menu_jogadas(self):
         possiveis_escolhas = [" Jogar"," Desistir da partida"]
@@ -199,25 +204,22 @@ class ControleJogo():
                     jogada_valida, msg, finalizou_ou_nao = self.mover_peca_jogador()
                     self.__tela_jogo.notifica_usuario(msg,1.5)
                     if finalizou_ou_nao:
-                        self.finalizar_partida()       
-                time.sleep(random.uniform(0.5,2.5))
-                self.mover_peca_bot()
+                        self.finalizar_partida(self.__jogador_atual.nome,"Xeque_mate")       
+                time.sleep(random.uniform(0.5,1.5))
+                jogada_valida_bot, msg_bot, finalizou_ou_nao_bot = self.mover_peca_bot()
+                if finalizou_ou_nao_bot:
+                    self.finalizar_partida(self.__bot.nome,"Xeque_Mate")
+                self.__tela_jogo.notifica_usuario(msg_bot,1.5)
                 foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
                 self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
             elif opcao_escolhida == 2:
-                self.finalizar_partida()
+                self.finalizar_partida(self.__bot.nome, "Desistencia")
                 break
             else:
                 msg = "digite uma opcao valida! "
                 self.__tela_jogo.notifica_usuario(msg,1.5)
 
     def mover_peca_bot(self):
-        xeque,cor_em_xeque = self.verifica_cheque()
-        xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
-        if xeque:
-            if xeque_mate:
-                return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
-            return True, f"Xeque nas {cor_em_xeque} !", False
         while True:
             lista_de_pecas = []
             for linha in range(8):
@@ -236,8 +238,14 @@ class ControleJogo():
         y_final = movimento_selecionado[1]
         self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
         self.__tabuleiro[x_inicial][y_inicial] = None
-        self.sincronizar_posicoes_tabuleiro()        #TEM QUE CADASTRAR O BOT
+        self.sincronizar_posicoes_tabuleiro()       
         self.__jogo_atual.registra_jogada(self.__bot,peca,peca.posicao,movimento_selecionado,self.__tabuleiro)
+        xeque,cor_em_xeque = self.verifica_cheque()
+        xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
+        if xeque:
+            if xeque_mate:
+                return  True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
+            return True,  f"Xeque nas {cor_em_xeque} !", False
         return True, "Jogada efetuada. ", False
         #1 listar todas as pecas disponiveis pra jogar
         #2 escolher de forma random uma delas
@@ -249,12 +257,6 @@ class ControleJogo():
         #8 imprimir tabuleiro e passar a jogada pro usuario
         
     def mover_peca_jogador(self):
-        xeque,cor_em_xeque = self.verifica_cheque()
-        xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
-        if xeque:
-            if xeque_mate:
-                return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
-            return True, f"Xeque nas {cor_em_xeque} !", False
         posicao_inicial = self.__tela_jogo.solicitar_posicao('inicial')
         posicao_final = self.__tela_jogo.solicitar_posicao('final')
         x_inicial = posicao_inicial[0]
@@ -275,4 +277,10 @@ class ControleJogo():
         self.__tabuleiro[x_inicial][y_inicial] = None
         self.sincronizar_posicoes_tabuleiro()       
         self.__jogo_atual.registra_jogada(self.__jogador_atual,self.__tabuleiro[x_inicial][y_inicial],posicao_inicial,posicao_final,self.__tabuleiro)
+        xeque,cor_em_xeque = self.verifica_cheque()
+        xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
+        if xeque:
+            if xeque_mate:
+                return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
+            return True, f"Xeque nas {cor_em_xeque} !", False
         return True, "Jogada efetuada. ", False

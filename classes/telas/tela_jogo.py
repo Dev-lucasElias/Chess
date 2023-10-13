@@ -1,4 +1,5 @@
 from classes.telas.tela import Tela
+from classes.modelos.jogada import Jogada
 import time
 
 
@@ -24,7 +25,24 @@ class TelaJogo(Tela):
     def notifica_usuario(self, menssagem, tempo):
         print(f"{menssagem}")
         time.sleep(tempo)
+    
+    def gerar_relatorio(self,jogador_atual, quem_ganhou, motivo, historico_jogadas, quantos_turnos):
+        print(f"""
+        *****  RELATORIO DE JOGO ****
+        
+        Jogador: {jogador_atual}
+        Vencedor: {quem_ganhou}
+        motivo: {motivo}
+        Quantos turnos: {quantos_turnos}
+        
+        -- historico de jogadas --""")
 
+        for i in historico_jogadas:
+            print(f""" - Jogador: {i.jogador}, Turno: {i.turno_jogada}, Peça selecionada: {i.peca}, Movimento: [{i.posicao_inicial},{i.posicao_final}],
+                   """)
+            
+        print(" ------------------------------------------")
+        
     
     #tem que converter também de 1 a 8 para 0 a 7
     #outro problema, toda a lógica de movimentação das peças é baseada em linha e coluna, mas o player está dando coluna e linha
