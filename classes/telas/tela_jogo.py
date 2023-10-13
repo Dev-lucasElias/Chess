@@ -92,4 +92,3 @@ class TelaJogo(Tela):
         return posicao_escolhida
         
         
-        
