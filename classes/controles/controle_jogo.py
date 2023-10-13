@@ -18,7 +18,7 @@ class ControleJogo():
         self.__tela_jogo = TelaJogo()
         self.__controlador_central = controlador_central
         self.__jogador_atual = None
-        self.__jogo_atual = Player()
+        self.__jogo_atual = Player(None,None)
         self.__bot = Player("BOT", "000000000")
         self.__historico_partidas = []
 
@@ -280,7 +280,7 @@ class ControleJogo():
         self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
         self.__tabuleiro[x_inicial][y_inicial] = None
         self.sincronizar_posicoes_tabuleiro()       
-        self.__jogo_atual.registra_jogada(self.__jogador_atual,self.__tabuleiro[x_inicial][y_inicial],posicao_inicial,posicao_final,self.__tabuleiro)
+        self.__jogo_atual.registra_jogada(self.__jogador_atual,self.__tabuleiro[x_final][y_final],posicao_inicial,posicao_final,self.__tabuleiro)
         xeque,cor_em_xeque = self.verifica_cheque()
         xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
         if xeque:

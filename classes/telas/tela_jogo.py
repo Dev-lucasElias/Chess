@@ -38,7 +38,7 @@ class TelaJogo(Tela):
         -- historico de jogadas --""")
 
         for i in historico_jogadas:
-            print(f""" - Jogador: {i.jogador}, Turno: {i.turno_jogada}, Peça selecionada: {i.peca}, Movimento: [{i.posicao_inicial},{i.posicao_final}],
+            print(f""" - Jogador: {i.jogador.nome}, Turno: {i.turno_jogada}, Peça selecionada: {i.peca.tipo}, Movimento: [{i.posicao_inicial},{i.posicao_final}],
                    """)
             
         print(" ------------------------------------------")
