@@ -215,7 +215,6 @@ class ControleJogo():
     def mover_peca_bot(self):
         xeque,cor_em_xeque = self.verifica_cheque()
         xeque_mate, cor_em_xeque_mate = self.verifica_cheque_mate()
-        print(self.__jogo_atual.turno_atual)
         if xeque:
             if xeque_mate:
                 return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
