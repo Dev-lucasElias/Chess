@@ -7,6 +7,9 @@ class Jogo:
         self.__turno_atual = 0
         self.__historico_jogadas = []
         self.__resultado_tabuleiro = tabuleiro
+        self.__status_partida = None
+        self.__quem_ganhou = None
+        self.__motivo = None
 
     @property
     def resultado_tabuleiro(self) -> list:
@@ -26,6 +29,43 @@ class Jogo:
     def turno_atual(self, turno_atual) -> None:
         if isinstance(turno_atual, int):
             self.__turno_atual = turno_atual
+
+    @property
+    def historico_jogadas(self):
+        return self.__historico_jogadas
+    
+    @property
+    def quem_ganhou(self):
+        return self.__quem_ganhou
+    
+    @quem_ganhou.setter
+    def quem_ganhou(self, quem_ganhou):
+        if isinstance(quem_ganhou, object):
+            self.__quem_ganhou = quem_ganhou
+    @property
+    def motivo(self):
+        return self.__motivo
+    
+    @motivo.setter
+    def motivo(self, motivo):
+        if isinstance(motivo, str):
+            self.__motivo = motivo
+    
+    @property
+    def status_partida(self):
+        return self.__status_partida
+    
+    @status_partida.setter
+    def status_partida(self, status):
+        if isinstance(status, str):
+            self.__status_partida = status
+
+        
+    def fechar_jogo(self, quem_ganhou, motivo):
+        self.quem_ganhou = quem_ganhou
+        self.motivo = motivo
+        self.status_partida = "Finalizado"
+        
 
     def registra_jogada(self, jogador,peca, posicao_inical, posicao_final, resultado_tabuleiro):
         jogada = Jogada(jogador, peca, posicao_inical, posicao_final, resultado_tabuleiro, self.__turno_atual)
