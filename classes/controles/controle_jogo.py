@@ -152,7 +152,6 @@ class ControleJogo():
                 tabuleiro = self.__tabuleiro
                 self.__jogo_atual = Jogo(jogador,tabuleiro)
                 self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))
-
                 self.menu_jogadas()
                 break
             elif opcao_escolhida == 2:
