@@ -17,6 +17,7 @@ class Jogo:
         if isinstance(resultado_tabuleiro, list):
             self.__resultado_tabuleiro = resultado_tabuleiro
     
+    #turno par = vez das brancas, turno impar = vez das pretas
     @property
     def turno_atual(self) -> int:
         return self.__turno_atual
