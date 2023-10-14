@@ -349,7 +349,7 @@ class ControleJogo():
         self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
         self.__tabuleiro[x_inicial][y_inicial] = None
         self.sincronizar_posicoes_tabuleiro()       
-        self.__jogo_atual.registra_jogada(Bot_cor,peca,posicao_selecionada,movimento_selecionado,self.__tabuleiro)
+        self.__jogo_atual.registra_jogada(Bot_cor,peca_selecionada,posicao_selecionada,movimento_selecionado,self.__tabuleiro)
         xeque,cor_em_xeque, rei_morto = self.verifica_cheque()
         xeque_mate, cor_em_xeque_mate, rei_morto = self.verifica_cheque_mate()
         if rei_morto == True: 
