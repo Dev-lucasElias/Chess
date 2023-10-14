@@ -15,11 +15,19 @@ class Jogo:
     @property
     def resultado_tabuleiro(self) -> list:
         return self.__resultado_tabuleiro
-	
+    
     @resultado_tabuleiro.setter
     def resultado_tabuleiro(self, resultado_tabuleiro) -> None:
         if isinstance(resultado_tabuleiro, list):
             self.__resultado_tabuleiro = resultado_tabuleiro
+
+    @property
+    def jogador_1(self):
+        return self.__jogador_1
+    
+    @property
+    def jogador_2(self) -> list:
+        return self.__jogador_2
     
     #turno par = vez das brancas, turno impar = vez das pretas
     @property

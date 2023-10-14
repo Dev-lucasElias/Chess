@@ -16,7 +16,7 @@ class TelaJogo(Tela):
         return super().mostrar_opcoes(opcoes, tipo_menu, limpar)
     
     def solicitar_jogador(self, numero) ->str:
-        nome_jogador = input(f"por favor digite o nome do jogador {numero} para começar a partida: ")
+        nome_jogador = input(f"                por favor digite o nome do jogador {numero} para começar a partida: ")
         self.limpar_tela()
         return nome_jogador
     
@@ -24,28 +24,45 @@ class TelaJogo(Tela):
         print(f"{menssagem}")
         time.sleep(tempo)
     
-    def gerar_relatorio(self,jogador_atual, quem_ganhou, motivo, historico_jogadas, quantos_turnos):
+    def gerar_relatorio(self,jogador1,jogador2, quem_ganhou, motivo, historico_jogadas, quantos_turnos):
         try:
             print(f"""
-            *****  RELATORIO DE JOGO ****
+              ***************  RELATORIO DE JOGO ***************
             
-            Jogador: {jogador_atual}
+            Jogadores: {jogador1} e {jogador2}
             Vencedor: {quem_ganhou}
             motivo: {motivo}
             Quantos turnos: {quantos_turnos}
             
-            -- historico de jogadas --
+                        ------ Historico de jogadas ------
             
             """)
 
             for i in historico_jogadas:
-                print(f""" T: {i.turno_jogada} - Jogador: {i.jogador.nome}, Peça selecionada: {i.peca.tipo}, Movimento: [{i.posicao_inicial},{i.posicao_final}]
+                print(f"""                 T: {i.turno_jogada} - Jogador: {i.jogador.nome}, Peça selecionada: {i.peca.tipo}, Movimento: [{i.posicao_inicial},{i.posicao_final}]
                     """)
                 
-            print(" ------------------------------------------")
+            print("                 -------------------------------------------------------------------")
 
         except Exception as e:
             raise relatorioError from e
+        
+    def gerar_historico_partidas(self,historico_partidas):
+        try:
+            for i in historico_partidas:
+                print(f"""
+                *****  RELATORIO DE JOGO ****
+                
+                Jogadores: {i.jogador_1.nome} vs {i.jogador_2.nome}
+                Vencedor: {i.quem_ganhou.nome}
+                motivo: {i.motivo}
+                Quantos turnos: {i.turno_atual}
+                
+                -- historico de jogadas --
+                
+                """)
+        except Exception as e:
+            raise relatorioError from e    
         
     
     def solicitar_posicao(self, tipo) -> str:

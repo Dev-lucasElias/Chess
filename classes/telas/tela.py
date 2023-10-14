@@ -13,7 +13,7 @@ class Tela(ABC):
                 Escolha uma opcao:
                     """)
             for i in range(len(opcoes)):
-                print(f"{i+1} - {opcoes[i]}")
+                print(f"                {i+1} - {opcoes[i]}")
 
             opcao_escolhida = self.verifica_numero_inteiro(input("""
                 opção ecolhida:"""),[range(1,len(opcoes))])                                    
@@ -31,8 +31,8 @@ class Tela(ABC):
                 input_manual_em_int = int(input_manual)
                 return input_manual_em_int
             except ValueError:
-                print("voce digitou valores incorretos, por favor, insira novamente.")
-                print(f"valore inteiros validos : {inteiros_validos}")
+                print("                voce digitou valores incorretos, por favor, insira novamente.")
+                print(f"                valore inteiros validos : {inteiros_validos}")
 
     def limpar_tela(self):
         os.system('cls' if os.name == 'nt' else 'clear') or None

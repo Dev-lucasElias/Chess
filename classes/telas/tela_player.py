@@ -31,5 +31,5 @@ class TelaPlayer(Tela):
         return nome_novo_jogador, cpf_novo_jogador
 
     def pergunta_dados_excluir(self) -> str:
-        nome = input("Digite o nome do jogador que gostaria de remover:")
+        nome = input("                Digite o nome do jogador que gostaria de remover:")
         return nome

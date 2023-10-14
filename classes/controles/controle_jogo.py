@@ -158,7 +158,7 @@ class ControleJogo():
             return True, "Pretas", False
 
     def abre_tela_jogo(self):
-        possiveis_escolhas = [" Iniciar Partida contra BOT"," Iniciar simulacao entre dois BOT's"," Iniciar Player vs Player"," voltar"]
+        possiveis_escolhas = [" Iniciar Partida contra BOT"," Iniciar simulacao entre dois BOT's"," Iniciar Player vs Player"," Imprimir historico de partidas"," voltar"]
         tipo_menu = "JOGADOR"
         while True:
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu, True)
@@ -178,6 +178,7 @@ class ControleJogo():
             elif opcao_escolhida == 2: #Simulacao
                 tabuleiro = self.__tabuleiro
                 self.__jogador_1 = self.__bot_branco
+                self.__jogador_2 = self.__bot_preto
                 self.__jogo_atual = Jogo(self.__bot_branco, self.__bot_preto,tabuleiro)
                 self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))
                 self.Simulacao()
@@ -199,6 +200,8 @@ class ControleJogo():
                     msg = "Jogador não encontrado! "
                     self.__tela_jogo.notifica_usuario(msg,2.0)
             elif opcao_escolhida == 4:
+                    self.__tela_jogo.gerar_historico_partidas(self.__historico_partidas)
+            elif opcao_escolhida == 5: # Voltar ao menu anterior 
                 self.__controlador_central.inicia_programa()
                 break
             else:
@@ -280,19 +283,19 @@ class ControleJogo():
         contador = 0
         while contador < 200:
             #***************************** vez das Brancas ***************************************
-            time.sleep(random.uniform(0.05,0.06))
+            #time.sleep(random.uniform(0.05,0.06))
             msg_bot, finalizou_ou_nao_bot_branco = self.mover_peca_bot(self.__bot_branco, "branco")
             if finalizou_ou_nao_bot_branco:
                 self.finalizar_partida(self.__bot_branco.nome,"Xeque_Mate")
-            self.__tela_jogo.notifica_usuario(msg_bot,0.02)
+            #self.__tela_jogo.notifica_usuario(msg_bot,0.02)
             foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
             self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
             #***************************** vez das Pretas ***************************************
-            time.sleep(random.uniform(0.05,0.06))
+           # time.sleep(random.uniform(0.05,0.06))
             msg_bot, finalizou_ou_nao_bot_preto = self.mover_peca_bot(self.__bot_preto,"preto")
             if finalizou_ou_nao_bot_preto:
                 self.finalizar_partida(self.__bot_preto.nome,"Xeque_Mate")
-            self.__tela_jogo.notifica_usuario(msg_bot,0.02)
+            #self.__tela_jogo.notifica_usuario(msg_bot,0.02)
             foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
             self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
             contador +=1
@@ -304,6 +307,7 @@ class ControleJogo():
         mesa.append(linha_superior)
         for i,row in enumerate(tabuleiro):
             linha = []  
+            
             for peca in row:
                 if peca is None:
                     linha.append("|    .    |")
@@ -321,11 +325,15 @@ class ControleJogo():
         linha = posicao_peca[1]
         return self.__tabuleiro[coluna][linha]
     
-    def finalizar_partida(self,quem_ganhou, motivo):
+    def finalizar_partida(self,numero_ganhador, motivo):
         self.__historico_partidas.append(self.__jogo_atual)
         self.__tabuleiro = self.gerar_tabuleiro()
+        if numero_ganhador == 1:
+            quem_ganhou = self.__jogador_1
+        else:
+            quem_ganhou = self.__jogador_2
         self.__jogo_atual.fechar_jogo(quem_ganhou, motivo)
-        self.__tela_jogo.gerar_relatorio(self.__jogador_1.nome,quem_ganhou, motivo, self.__jogo_atual.historico_jogadas, self.__jogo_atual.turno_atual)
+        self.__tela_jogo.gerar_relatorio(self.__jogador_1.nome, self.__jogador_2.nome,quem_ganhou.nome, motivo, self.__jogo_atual.historico_jogadas, self.__jogo_atual.turno_atual)
         self.__jogador_1 = Player(None,None)
         self.__jogador_2 = Player(None,None)
         self.abre_tela_jogo()
