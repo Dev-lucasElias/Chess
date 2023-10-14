@@ -414,7 +414,7 @@ class ControleJogo():
         xeque,cor_em_xeque, rei_morto = self.verifica_cheque()
         xeque_mate, cor_em_xeque_mate, rei_morto = self.verifica_cheque_mate()
         if rei_morto == True: 
-            return  f"""
+            return True, f"""
                         ***** ATENCAO ****
 
                 Xeque-Mate, as {cor_em_xeque_mate} Perderam
@@ -422,18 +422,18 @@ class ControleJogo():
                 """, True
         if xeque:
             if xeque_mate:
-                return  f""""
+                return True, f""""
                         ***** FIM DE JOGO ****
 
                 Xeque-Mate, as {cor_em_xeque_mate} Perderam
                 
                 """, True
-            return f"""
+            return True, f"""
                         ***** ATENCAO ****
             Xeque nas {cor_em_xeque} !
             
             """, False
-        return """
+        return True,  """
         
         Jogada efetuada. 
         
