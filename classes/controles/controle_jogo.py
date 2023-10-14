@@ -83,7 +83,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == 'rei':
+                        if self.__tabuleiro[i][j].tipo == 'reeeii':
                             if self.__tabuleiro[i][j].cor == 'branco':
                                 posicao_rei = self.__tabuleiro[i][j].posicao
                         else:
@@ -100,7 +100,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == 'rei':
+                        if self.__tabuleiro[i][j].tipo == 'reeeii':
                             if self.__tabuleiro[i][j].cor == 'preto':
                                 posicao_rei = self.__tabuleiro[i][j].posicao
                         else:
@@ -125,7 +125,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == 'rei':
+                        if self.__tabuleiro[i][j].tipo == 'reeeii':
                             if self.__tabuleiro[i][j].cor == 'branco':
                                 movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro)
                         else:
@@ -143,7 +143,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == 'rei':
+                        if self.__tabuleiro[i][j].tipo == 'reeeii':
                             if self.__tabuleiro[i][j].cor == 'preto':
                                 movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro)
                         else:
@@ -213,12 +213,12 @@ class ControleJogo():
             if opcao_escolhida == 1: 
                 jogada_valida = False
                 while jogada_valida ==  False:
-                    jogada_valida, msg, finalizou_ou_nao = self.mover_peca_jogador()
+                    jogada_valida, msg, finalizou_ou_nao = self.mover_peca_jogador("branco")
                     self.__tela_jogo.notifica_usuario(msg,1.5)
                     if finalizou_ou_nao:
                         self.finalizar_partida(self.__jogador_1.nome,"Xeque_mate")       
                 time.sleep(random.uniform(0.5,1.5))
-                jogada_valida_bot, msg_bot, finalizou_ou_nao_bot = self.mover_peca_bot("preto")
+                msg_bot, finalizou_ou_nao_bot = self.mover_peca_bot(self.__bot_preto,"preto")
                 if finalizou_ou_nao_bot:
                     self.finalizar_partida(self.__bot_preto.nome,"Xeque_Mate")
                 self.__tela_jogo.notifica_usuario(msg_bot,1.5)
@@ -300,19 +300,19 @@ class ControleJogo():
     def gerar_foto_tabuleiro(self, tabuleiro):
         mesa = []
         letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
-        linha_superior = [f"   {letras[i]}   " for i in range(8)]
+        linha_superior = [f"    {letras[i]}    " for i in range(8)]
         mesa.append(linha_superior)
         for i,row in enumerate(tabuleiro):
             linha = []  
             for peca in row:
                 if peca is None:
-                    linha.append("   .   ")
+                    linha.append("    .    ")
                 else:
                     if peca.tipo == "peao":
-                        linha.append(str(f' {peca.cor[0]}{peca.tipo} '))
+                        linha.append(str(f' {peca.tipo}{peca.cor[0]} '))
                     else:
-                        linha.append(str(f'{peca.cor[0]}{peca.tipo} '))
-            linha.append(f" {i}")
+                        linha.append(str(f' {peca.tipo}{peca.cor[0]} '))
+            linha.append(f"{i}")
             mesa.append(linha)
         return  mesa
     
@@ -337,6 +337,7 @@ class ControleJogo():
                         peca = self.__tabuleiro[linha][coluna]
                         lista_de_pecas.append(peca)
             peca_selecionada = random.choice(lista_de_pecas)
+            posicao_selecionada = peca_selecionada.posicao
             possiveis_movimentos = peca_selecionada.possiveis_movimentos(self.__tabuleiro)
             if len(possiveis_movimentos) != 0:
                 break
@@ -348,16 +349,34 @@ class ControleJogo():
         self.__tabuleiro[x_final][y_final] = self.__tabuleiro[x_inicial][y_inicial]
         self.__tabuleiro[x_inicial][y_inicial] = None
         self.sincronizar_posicoes_tabuleiro()       
-        self.__jogo_atual.registra_jogada(Bot_cor,peca,peca.posicao,movimento_selecionado,self.__tabuleiro)
+        self.__jogo_atual.registra_jogada(Bot_cor,peca,posicao_selecionada,movimento_selecionado,self.__tabuleiro)
         xeque,cor_em_xeque, rei_morto = self.verifica_cheque()
         xeque_mate, cor_em_xeque_mate, rei_morto = self.verifica_cheque_mate()
         if rei_morto == True: 
-            return  f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
+            return  f"""
+                        ***** ATENCAO ****
+
+                Xeque-Mate, as {cor_em_xeque_mate} Perderam
+                
+                """, True
         if xeque:
             if xeque_mate:
-                return  f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
-            return f"Xeque nas {cor_em_xeque} !", False
-        return "Jogada efetuada. ", False
+                return  f""""
+                        ***** FIM DE JOGO ****
+
+                Xeque-Mate, as {cor_em_xeque_mate} Perderam
+                
+                """, True
+            return f"""
+                        ***** ATENCAO ****
+            Xeque nas {cor_em_xeque} !
+            
+            """, False
+        return """
+        
+        Jogada efetuada. 
+        
+        """, False
     
 
     def mover_peca_jogador(self, cor):
@@ -384,9 +403,27 @@ class ControleJogo():
         xeque,cor_em_xeque, rei_morto = self.verifica_cheque()
         xeque_mate, cor_em_xeque_mate, rei_morto = self.verifica_cheque_mate()
         if rei_morto == True: 
-            return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
+            return  f"""
+                        ***** ATENCAO ****
+
+                Xeque-Mate, as {cor_em_xeque_mate} Perderam
+                
+                """, True
         if xeque:
             if xeque_mate:
-                return True, f"Xeque-Mate, as {cor_em_xeque_mate} Perderam", True
-            return True, f"Xeque nas {cor_em_xeque} !", False
-        return True, "Jogada efetuada. ", False
+                return  f""""
+                        ***** FIM DE JOGO ****
+
+                Xeque-Mate, as {cor_em_xeque_mate} Perderam
+                
+                """, True
+            return f"""
+                        ***** ATENCAO ****
+            Xeque nas {cor_em_xeque} !
+            
+            """, False
+        return """
+        
+        Jogada efetuada. 
+        
+        """, False
