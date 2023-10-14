@@ -323,8 +323,11 @@ class ControleJogo():
     
     def finalizar_partida(self,quem_ganhou, motivo):
         self.__historico_partidas.append(self.__jogo_atual)
+        self.__tabuleiro = self.gerar_tabuleiro()
         self.__jogo_atual.fechar_jogo(quem_ganhou, motivo)
         self.__tela_jogo.gerar_relatorio(self.__jogador_1.nome,quem_ganhou, motivo, self.__jogo_atual.historico_jogadas, self.__jogo_atual.turno_atual)
+        self.__jogador_1 = Player(None,None)
+        self.__jogador_2 = Player(None,None)
         self.abre_tela_jogo()
 
     def mover_peca_bot(self, Bot_cor , cor: str):
