@@ -3,7 +3,7 @@ from classes.modelos.pecas.peca import Peca
 class Cavalo(Peca):
     def __init__(self, cor: str, posicao: list) -> None:
         super().__init__(cor, posicao)
-        self.__tipo = 'cavalo'
+        self.__tipo = 'CAVALO'
 
     @property
     def tipo(self) -> str:

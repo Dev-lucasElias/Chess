@@ -83,7 +83,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == 'reeeii':
+                        if self.__tabuleiro[i][j].tipo == '  REI ':
                             if self.__tabuleiro[i][j].cor == 'branco':
                                 posicao_rei = self.__tabuleiro[i][j].posicao
                         else:
@@ -100,7 +100,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == 'reeeii':
+                        if self.__tabuleiro[i][j].tipo == '  REI ':
                             if self.__tabuleiro[i][j].cor == 'preto':
                                 posicao_rei = self.__tabuleiro[i][j].posicao
                         else:
@@ -125,7 +125,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == 'reeeii':
+                        if self.__tabuleiro[i][j].tipo == '  REI ':
                             if self.__tabuleiro[i][j].cor == 'branco':
                                 movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro)
                         else:
@@ -143,7 +143,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == 'reeeii':
+                        if self.__tabuleiro[i][j].tipo == '  REI ':
                             if self.__tabuleiro[i][j].cor == 'preto':
                                 movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro)
                         else:
@@ -300,19 +300,19 @@ class ControleJogo():
     def gerar_foto_tabuleiro(self, tabuleiro):
         mesa = []
         letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
-        linha_superior = [f"    {letras[i]}    " for i in range(8)]
+        linha_superior = [f"     {letras[i]}     " for i in range(8)]
         mesa.append(linha_superior)
         for i,row in enumerate(tabuleiro):
             linha = []  
             for peca in row:
                 if peca is None:
-                    linha.append("    .    ")
+                    linha.append("|    .    |")
                 else:
-                    if peca.tipo == "peao":
-                        linha.append(str(f' {peca.tipo}{peca.cor[0]} '))
+                    if peca.tipo == " PIÃO ":
+                        linha.append(str(f'| {peca.tipo}{peca.cor[0]} |'))
                     else:
-                        linha.append(str(f' {peca.tipo}{peca.cor[0]} '))
-            linha.append(f"{i}")
+                        linha.append(str(f'| {peca.tipo}{peca.cor[0]} |'))
+            linha.append(f" {i}")
             mesa.append(linha)
         return  mesa
     
