@@ -2,8 +2,9 @@ from classes.modelos.jogada import Jogada
 
 class Jogo:
 
-    def __init__(self, jogador_partida, tabuleiro) -> None:
-        self.__jogador_partida = jogador_partida
+    def __init__(self, jogador_partida_1, jogador_partida_2, tabuleiro) -> None:
+        self.__jogador_1 = jogador_partida_1
+        self.__jogador_2 = jogador_partida_2
         self.__turno_atual = 0
         self.__historico_jogadas = []
         self.__resultado_tabuleiro = tabuleiro
@@ -66,7 +67,8 @@ class Jogo:
         self.motivo = motivo
         self.status_partida = "Finalizado"
         
-
+    
+    
     def registra_jogada(self, jogador,peca, posicao_inical, posicao_final, resultado_tabuleiro):
         jogada = Jogada(jogador, peca, posicao_inical, posicao_final, resultado_tabuleiro, self.__turno_atual)
         self.__historico_jogadas.append(jogada)

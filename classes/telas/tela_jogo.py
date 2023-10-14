@@ -17,8 +17,8 @@ class TelaJogo(Tela):
     def mostrar_opcoes(self, opcoes, tipo_menu, limpar) -> int:
         return super().mostrar_opcoes(opcoes, tipo_menu, limpar)
     
-    def solicitar_jogador(self) ->str:
-        nome_jogador = input("por favor digite o nome do jogador para começar a partida: ")
+    def solicitar_jogador(self, numero) ->str:
+        nome_jogador = input(f"por favor digite o nome do jogador {numero} para começar a partida: ")
         self.limpar_tela()
         return nome_jogador
     
@@ -35,10 +35,12 @@ class TelaJogo(Tela):
         motivo: {motivo}
         Quantos turnos: {quantos_turnos}
         
-        -- historico de jogadas --""")
+        -- historico de jogadas --
+        
+        """)
 
         for i in historico_jogadas:
-            print(f""" - Jogador: {i.jogador.nome}, Turno: {i.turno_jogada}, Peça selecionada: {i.peca.tipo}, Movimento: [{i.posicao_inicial},{i.posicao_final}],
+            print(f""" T: {i.turno_jogada} - Jogador: {i.jogador.nome}, Peça selecionada: {i.peca.tipo}, Movimento: [{i.posicao_inicial},{i.posicao_final}]
                    """)
             
         print(" ------------------------------------------")
