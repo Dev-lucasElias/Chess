@@ -19,7 +19,7 @@ class ControleJogo():
         self.__controlador_central = controlador_central
         self.__jogador_1 = Player(None,None)
         self.__jogador_2 = Player(None,None)
-        self.__jogo_atual = Player(None,None)
+        self.__jogo_atual = Jogo(None,None,None)
         self.__bot_preto = Player("BOT_preto", "000000000")
         self.__historico_partidas = []
         self.__bot_branco = Player("BOT_Branco", "999999999")
@@ -169,6 +169,7 @@ class ControleJogo():
                 if jogador != None and isinstance(jogador,Player):
                     self.__jogo_atual = Jogo(jogador, self.__bot_preto,tabuleiro)
                     self.__jogador_1 = jogador
+                    self.__jogador_2 = self.__bot_preto
                     self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))
                     self.menu_jogadas_player_bot()
                     break
@@ -219,16 +220,16 @@ class ControleJogo():
                     jogada_valida, msg, finalizou_ou_nao = self.mover_peca_jogador("branco")
                     self.__tela_jogo.notifica_usuario(msg,1.5)
                     if finalizou_ou_nao:
-                        self.finalizar_partida(self.__jogador_1.nome,"Xeque_mate")       
+                        self.finalizar_partida(1,"Xeque_mate")       
                 time.sleep(random.uniform(0.5,1.5))
                 msg_bot, finalizou_ou_nao_bot = self.mover_peca_bot(self.__bot_preto,"preto")
                 if finalizou_ou_nao_bot:
-                    self.finalizar_partida(self.__bot_preto.nome,"Xeque_Mate")
+                    self.finalizar_partida(2,"Xeque_Mate")
                 self.__tela_jogo.notifica_usuario(msg_bot,1.5)
                 foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
                 self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
             elif opcao_escolhida == 2:
-                self.finalizar_partida(self.__bot_preto.nome, "Desistencia")
+                self.finalizar_partida(2, "Desistencia")
                 break
             else:
                 msg = "digite uma opcao valida! "
@@ -247,9 +248,9 @@ class ControleJogo():
                     jogada_valida, msg, finalizou_ou_nao = self.mover_peca_jogador("branco")
                     self.__tela_jogo.notifica_usuario(msg,1.5)
                     if finalizou_ou_nao:
-                        self.finalizar_partida(self.__jogador_1.nome,"Xeque_mate")       
+                        self.finalizar_partida(1,"Xeque_mate")       
             elif opcao_escolhida == 2:
-                self.finalizar_partida(self.__jogador_2.nome, "Desistencia")
+                self.finalizar_partida(1, "Desistencia")
                 break
             else:
                 msg = "digite uma opcao valida! "
@@ -266,9 +267,9 @@ class ControleJogo():
                     jogada_valida, msg, finalizou_ou_nao = self.mover_peca_jogador("preto")
                     self.__tela_jogo.notifica_usuario(msg,1.5)
                     if finalizou_ou_nao:
-                        self.finalizar_partida(self.__jogador_2.nome,"Xeque_mate")       
+                        self.finalizar_partida(2,"Xeque_mate")       
             elif opcao_escolhida == 2:
-                self.finalizar_partida(self.__jogador_2.nome, "Desistencia")
+                self.finalizar_partida(2, "Desistencia")
                 break
             else:
                 msg = "digite uma opcao valida! "
@@ -286,7 +287,7 @@ class ControleJogo():
             #time.sleep(random.uniform(0.05,0.06))
             msg_bot, finalizou_ou_nao_bot_branco = self.mover_peca_bot(self.__bot_branco, "branco")
             if finalizou_ou_nao_bot_branco:
-                self.finalizar_partida(self.__bot_branco.nome,"Xeque_Mate")
+                self.finalizar_partida(1,"Xeque_Mate")
             #self.__tela_jogo.notifica_usuario(msg_bot,0.02)
             foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
             self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
@@ -294,7 +295,7 @@ class ControleJogo():
            # time.sleep(random.uniform(0.05,0.06))
             msg_bot, finalizou_ou_nao_bot_preto = self.mover_peca_bot(self.__bot_preto,"preto")
             if finalizou_ou_nao_bot_preto:
-                self.finalizar_partida(self.__bot_preto.nome,"Xeque_Mate")
+                self.finalizar_partida(2,"Xeque_Mate")
             #self.__tela_jogo.notifica_usuario(msg_bot,0.02)
             foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
             self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
@@ -329,13 +330,11 @@ class ControleJogo():
         self.__historico_partidas.append(self.__jogo_atual)
         self.__tabuleiro = self.gerar_tabuleiro()
         if numero_ganhador == 1:
-            quem_ganhou = self.__jogador_1
+            quem_ganhou = self.__jogador_1.nome
         else:
-            quem_ganhou = self.__jogador_2
+            quem_ganhou = self.__jogador_2.nome
         self.__jogo_atual.fechar_jogo(quem_ganhou, motivo)
-        self.__tela_jogo.gerar_relatorio(self.__jogador_1.nome, self.__jogador_2.nome,quem_ganhou.nome, motivo, self.__jogo_atual.historico_jogadas, self.__jogo_atual.turno_atual)
-        self.__jogador_1 = Player(None,None)
-        self.__jogador_2 = Player(None,None)
+        self.__tela_jogo.gerar_relatorio(self.__jogador_1.nome, self.__jogador_2.nome,quem_ganhou, motivo, self.__jogo_atual.historico_jogadas, self.__jogo_atual.turno_atual)
         self.abre_tela_jogo()
 
     def mover_peca_bot(self, Bot_cor , cor: str):
