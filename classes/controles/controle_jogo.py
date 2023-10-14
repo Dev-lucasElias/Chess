@@ -213,7 +213,7 @@ class ControleJogo():
             if opcao_escolhida == 1: 
                 jogada_valida = False
                 while jogada_valida ==  False:
-                    jogada_valida, msg, finalizou_ou_nao = self.mover_peca_jogador()
+                    jogada_valida, msg, finalizou_ou_nao = self.mover_peca_jogador('branco')
                     self.__tela_jogo.notifica_usuario(msg,1.5)
                     if finalizou_ou_nao:
                         self.finalizar_partida(self.__jogador_1.nome,"Xeque_mate")       
