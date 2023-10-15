@@ -120,6 +120,8 @@ class ControleJogo():
     def verifica_cheque_mate(self) -> bool:
         ameacas_rei = list()
         movimentos_rei = None
+        pecas_perigosas = list()
+        aliados_rei = list()
         #verifica se as brancas tomaram cheque-mate
         if self.__jogo_atual.turno_atual % 2 == 0:
             for i in range(8):
@@ -127,16 +129,31 @@ class ControleJogo():
                     if self.__tabuleiro[i][j] != None:
                         if self.__tabuleiro[i][j].tipo == '  REI ':
                             if self.__tabuleiro[i][j].cor == 'branco':
-                                movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro)
+                                rei = self.__tabuleiro[i][j]
+                                movimentos_rei = rei.possiveis_movimentos(self.__tabuleiro)
                         else:
-                            if self.__tabuleiro[i][j].cor == 'preto':
+                            if self.__tabuleiro[i][j].cor == 'branco':
+                                aliados_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro))
+                            else:
                                 ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro))
             if movimentos_rei == None:
-               return True, "Brancas", True
-
+                return True, "Brancas", True
             for possivel_fuga in movimentos_rei:
                 if possivel_fuga not in ameacas_rei:
                     return False, "Brancas", False
+            for i in range(8):
+                for j in range(8):
+                    if self.__tabuleiro[i][j] != None:
+                        if self.__tabuleiro[i][j].cor == 'preto':
+                            if self.__tabuleiro[i][j].tipo != '  REI ':
+                                if rei.posicao in self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro):
+                                    pecas_perigosas.append(self.__tabuleiro[i][j])
+            if len(pecas_perigosas) == 1:
+                if pecas_perigosas[0].posicao in aliados_rei:
+                    return False, "Brancas", False
+                for movimento in pecas_perigosas[0].possiveis_movimentos(self.__tabuleiro):
+                    if movimento in aliados_rei:
+                        return False, "Brancas", False
             return True, "Brancas", False
         #verifica se as pretas tomaram cheque-mate
         if self.__jogo_atual.turno_atual % 2 == 1:
@@ -145,16 +162,31 @@ class ControleJogo():
                     if self.__tabuleiro[i][j] != None:
                         if self.__tabuleiro[i][j].tipo == '  REI ':
                             if self.__tabuleiro[i][j].cor == 'preto':
-                                movimentos_rei = self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro)
+                                rei = self.__tabuleiro[i][j]
+                                movimentos_rei = rei.possiveis_movimentos(self.__tabuleiro)
                         else:
-                            if self.__tabuleiro[i][j].cor == 'branco':
+                            if self.__tabuleiro[i][j].cor == 'preto':
+                                aliados_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro))
+                            else:
                                 ameacas_rei.extend(self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro))
             if movimentos_rei == None:
-               return True, "Brancas", True
-
+                return True, "Pretas", True
             for possivel_fuga in movimentos_rei:
                 if possivel_fuga not in ameacas_rei:
                     return False, "Pretas", False
+            for i in range(8):
+                for j in range(8):
+                    if self.__tabuleiro[i][j] != None:
+                        if self.__tabuleiro[i][j].cor == 'branco':
+                            if self.__tabuleiro[i][j].tipo != '  REI ':
+                                if rei.posicao in self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro):
+                                    pecas_perigosas.append(self.__tabuleiro[i][j])
+            if len(pecas_perigosas) == 1:
+                if pecas_perigosas[0].posicao in aliados_rei:
+                    return False, "Pretas", False
+                for movimento in pecas_perigosas[0].possiveis_movimentos(self.__tabuleiro):
+                    if movimento in aliados_rei:
+                        return False, "Pretas", False
             return True, "Pretas", False
 
     def abre_tela_jogo(self):
