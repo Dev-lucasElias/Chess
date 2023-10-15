@@ -54,7 +54,7 @@ class TelaJogo(Tela):
                 *****  RELATORIO DE JOGO ****
                 
                 Jogadores: {i.jogador_1.nome} vs {i.jogador_2.nome}
-                Vencedor: {i.quem_ganhou.nome}
+                Vencedor: {i.quem_ganhou}
                 motivo: {i.motivo}
                 Quantos turnos: {i.turno_atual}
                 

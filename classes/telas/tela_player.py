@@ -6,7 +6,7 @@ class TelaPlayer(Tela):
         
     
     def listar_jogadores(self,lista):
-        if len(lista) > 1:
+        if len(lista) >= 1:
             print("""
         LISTA DE JOGADORES
                             

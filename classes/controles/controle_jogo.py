@@ -253,11 +253,13 @@ class ControleJogo():
                     self.__tela_jogo.notifica_usuario(msg,1.5)
                     if finalizou_ou_nao:
                         self.finalizar_partida(1,"Xeque_mate")       
-                time.sleep(random.uniform(0.5,1.5))
+                foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
+                self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
+                time.sleep(random.uniform(0.5,1.0))
                 msg_bot, finalizou_ou_nao_bot = self.mover_peca_bot(self.__bot_preto,"preto")
                 if finalizou_ou_nao_bot:
                     self.finalizar_partida(2,"Xeque_Mate")
-                self.__tela_jogo.notifica_usuario(msg_bot,1.5)
+                self.__tela_jogo.notifica_usuario(msg_bot,1.0)
                 foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
                 self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
             elif opcao_escolhida == 2:

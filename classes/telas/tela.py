@@ -15,8 +15,8 @@ class Tela(ABC):
             for i in range(len(opcoes)):
                 print(f"                {i+1} - {opcoes[i]}")
 
-            opcao_escolhida = self.verifica_numero_inteiro(input("""
-                opção ecolhida:"""),[range(1,len(opcoes))])                                    
+            opcao_escolhida = self.verifica_numero_inteiro("""
+                opção ecolhida: ""","1 e 2 ")                                    
             if limpar :
                 self.limpar_tela()
             return opcao_escolhida
@@ -25,9 +25,9 @@ class Tela(ABC):
 
 
     def verifica_numero_inteiro(self,mensagem, inteiros_validos):
-        input_manual = mensagem
         while True:
             try:
+                input_manual = input(mensagem)
                 input_manual_em_int = int(input_manual)
                 return input_manual_em_int
             except ValueError:
