@@ -20,3 +20,7 @@ Relatorio: Histórico de jogadas, jogador vencedor e turnos
 Herança: Peças 
 Composição:
 Agregação:
+
+### O que cada um fez:
+Guilherme: Fez os modelos das peças, trabalhou com o controlador jogo na criação do tabuleiro, na movimentação das peças, na verificação de cheque e cheque mate, nos métodos de suporte e criou a tela de regras.
+Lucas: Trabalhou nos modelos jogada, fez o controle central, a maior parte das telas e os controladores que interagem com elas. Dentro do controle jogo trabalhou na criação do bot, na simulação e nos métodos que interagem com as telas.
