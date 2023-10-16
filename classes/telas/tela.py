@@ -10,7 +10,7 @@ class Tela(ABC):
             print(f"""
             ****  MENU {tipo_menu} ****
                                                 
-                Escolha uma opcao:
+                Escolha uma opcão:
                     """)
             for i in range(len(opcoes)):
                 print(f"                {i+1} - {opcoes[i]}")
