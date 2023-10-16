@@ -2,12 +2,14 @@
 from classes.controles.controle_jogo import ControleJogo
 from classes.controles.controle_player import ControlePlayer
 from classes.telas.tela_central import TelaCentral
-
+from classes.telas.tela_regras import TelaRegras
+import time
 
 class ControleCentral:
     def __init__(self):
         self.__controle_player = ControlePlayer(self)
         self.__controle_jogo = ControleJogo(self)
+        self.__tela_regras = TelaRegras(self)
         self.__tela_central = TelaCentral()
 
     def chama_controlador_player(self):
@@ -21,7 +23,7 @@ class ControleCentral:
         return jogador
 
     def inicia_programa(self):
-        possiveis_escolhas = [" Menu Jogador"," Menu Partida"]
+        possiveis_escolhas = [" Menu Jogador"," Menu Partida", " Menu Regras"]
         tipo_menu = "CENTRAL"
         while True:
             self.__tela_central.limpar_tela()
@@ -32,8 +34,12 @@ class ControleCentral:
             elif opcao_escolhida == 2:
                 self.chama_controlador_tabuleiro()
                 break
+            elif opcao_escolhida == 3:
+                self.__tela_regras.mostrar_regras()
+                break
             else:
-                print("digite a opcao correta!")
+                print("Opção invalida")
+                time.sleep(1.5)
 
             
 

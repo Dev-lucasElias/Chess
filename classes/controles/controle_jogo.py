@@ -208,13 +208,13 @@ class ControleJogo():
                 else:
                     msg = "Jogador não encontrado! "
                     self.__tela_jogo.notifica_usuario(msg,2.0)
-            elif opcao_escolhida == 2: #Simulacao
+            elif opcao_escolhida == 2: #simulacao
                 tabuleiro = self.__tabuleiro
                 self.__jogador_1 = self.__bot_branco
                 self.__jogador_2 = self.__bot_preto
                 self.__jogo_atual = Jogo(self.__bot_branco, self.__bot_preto,tabuleiro)
                 self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))
-                self.Simulacao()
+                self.simulacao()
                 break
             elif opcao_escolhida == 3: #Player Vs Player
                 nome_jogador_1 = self.__tela_jogo.solicitar_jogador(1)
@@ -314,7 +314,7 @@ class ControleJogo():
             self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
 
 
-    def Simulacao(self):
+    def simulacao(self):
         contador = 0
         while contador < 200:
             #***************************** vez das Brancas ***************************************
