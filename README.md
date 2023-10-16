@@ -13,13 +13,13 @@ As regras de negócio são muito semelhantes as do xadrez convencional. A cada t
 
 ### Requisitos:
 
-Cadastro: Jogador
+Cadastro: Jogador, jogadas e pecas.
 Registro: Histórico de jogadas
 Relatorio: Histórico de jogadas, jogador vencedor e turnos
 
-Herança: Peças 
-Composição:
-Agregação:
+Herança: Peças e telas
+Composição: jogada é uma composicao de Jogo
+Agregação: Player é uma agregaçao de Jogo e Jogoda.
 
 ### O que cada um fez:
 Guilherme: Fez os modelos das peças, trabalhou com o controlador jogo na criação do tabuleiro, na verificação de cheque e cheque mate, na movimentação das peças e na criação da tela de regras.
