@@ -22,6 +22,6 @@ Composição: jogada é uma composicao de Jogo
 Agregação: Player é uma agregaçao de Jogo e Jogoda.
 
 ### O que cada um fez:
-Guilherme: Fez os modelos das peças, trabalhou com o controlador jogo na criação do tabuleiro, na verificação de cheque e cheque mate, na movimentação das peças e na criação da tela de regras.
+Guilherme: Fez os modelos das peças, trabalhou com o controlador jogo na criação do tabuleiro, na verificação de cheque e cheque mate, na movimentação das peças player e na criação da tela de regras.
 
-Lucas: Trabalhou nos modelos jogada, jogo e player. Fez o controle central, a maior parte das telas e dos controladores que interagem com elas. Dentro do controle jogo trabalhou na criação do bot, da simulação e dos menus.
+Lucas: Trabalhou nos modelos jogada, jogo e player. Fez o controle central, a maior parte das telas e dos controladores que interagem com elas. Dentro do controle jogo trabalhou na criação do bot e da movimentaçao da peça pelo bot, da simulação e dos menus.
