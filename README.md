@@ -29,3 +29,5 @@ Agregação: Player é uma agregaçao de Jogo e Jogoda.
 Guilherme: Fez os modelos das peças, trabalhou com o controlador jogo na criação do tabuleiro, na verificação de cheque e cheque mate, na movimentação das peças pelo player e na criação da tela de regras.
 
 Lucas: Trabalhou nos modelos jogada, jogo e player. Fez o controle central, a maior parte das telas e dos controladores que interagem com elas. Dentro do controle jogo trabalhou na criação do bot e da movimentaçao da peça pelo bot, da simulação e dos menus.
+
+![xadrez modelagem](https://github.com/Dev-lucasElias/Chess/assets/94094527/35d8fb5d-fe99-49cb-b635-f0f92ce9d42b)
