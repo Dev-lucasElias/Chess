@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import os
 from classes.excepitions.relatorioError import relatorioError
+import PySimpleGUI as sg
 
 class Tela(ABC):
 

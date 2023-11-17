@@ -2,15 +2,29 @@ from classes.telas.tela import Tela
 from classes.modelos.jogada import Jogada
 from classes.excepitions.relatorioError import relatorioError
 import time
+import PySimpleGUI as sg
 
 
 class TelaJogo(Tela):
-    
-    def mostrar_tabuleiro(self, foto_matriz):
-        for linha in foto_matriz:
-            for posicao in linha:
-                    print(posicao, end=' ')
-            print('\n')
+    def __init__(self) -> None:
+        self.__posicao_inicial = None
+        self.__posicao_final = None
+
+    def mostrar_tabuleiro(self, tabuleiro):
+        janela = sg.Window('Chess', tabuleiro)
+        self.__posicao_inicial = None
+        self.__posicao_final = None
+        while True:
+            evento, valores = janela.read()
+            if evento == sg.WINDOW_CLOSED:
+                break
+            elif type(evento) == tuple:  # Checking if the event is a tuple, indicating a button click
+                if self.__posicao_inicial is None:
+                    self.__posicao_inicial = evento  # Store the first click
+                elif self.__posicao_final is None:
+                    self.__posicao_final = evento  # Store the second click
+        return self.__posicao_inicial, self.__posicao_final
+
 
     def mostrar_opcoes(self, opcoes, tipo_menu, limpar) -> int:
         return super().mostrar_opcoes(opcoes, tipo_menu, limpar)

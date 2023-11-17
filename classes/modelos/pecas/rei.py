@@ -3,7 +3,7 @@ from classes.modelos.pecas.peca import Peca
 class Rei(Peca):
     def __init__(self, cor: str, posicao: list) -> None:
         super().__init__(cor, posicao)
-        self.__tipo = '  REI '
+        self.__tipo = 'REI'
 
     @property
     def tipo(self) -> str:
