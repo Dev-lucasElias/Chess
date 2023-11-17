@@ -10,6 +10,7 @@ from classes.modelos.player import Player
 #from classes.controles.controle_player import Player
 import random
 import time
+import PySimpleGUI as sg
 #from classes.controles.controle_central import ControleCentral
 
 class ControleJogo():
@@ -336,24 +337,52 @@ class ControleJogo():
             contador +=1
 
     def gerar_foto_tabuleiro(self, tabuleiro):
-        mesa = []
-        letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
-        linha_superior = [f"     {letras[i]}     " for i in range(8)]
-        mesa.append(linha_superior)
-        for i,row in enumerate(tabuleiro):
-            linha = []  
-            
-            for peca in row:
-                if peca is None:
-                    linha.append("|    .    |")
+        tabuleiro_gui = list()
+        i = -1
+        j = -1
+        for linha in tabuleiro:
+            i += 1
+            linha_tabuleiro = list()
+            peca = None
+            for posicao in linha:
+                j += 1
+                try:
+                    if posicao.cor == 'branco':
+                        if posicao.tipo == 'BISPO':
+                            peca = 'images/wB.png'
+                        if posicao.tipo == 'CAVALO':
+                            peca = 'images/wN.png'
+                        if posicao.tipo == 'PEAO':
+                            peca = 'images/wp.png'
+                        if posicao.tipo == 'RAINHA':
+                            peca = 'images/wQ.png'
+                        if posicao.tipo == 'REI':
+                            peca = 'images/wK.png'
+                        if posicao.tipo == 'TORRE':
+                            peca = 'images/wR.png'
+                    if posicao.cor == 'preto':
+                        if posicao.tipo == 'BISPO':
+                            peca = 'images/bB.png'
+                        if posicao.tipo == 'CAVALO':
+                            peca = 'images/bN.png'
+                        if posicao.tipo == 'PEAO':
+                            peca = 'images/bp.png'
+                        if posicao.tipo == 'RAINHA':
+                            peca = 'images/bQ.png'
+                        if posicao.tipo == 'REI':
+                            peca = 'images/bK.png'
+                        if posicao.tipo == 'TORRE':
+                            peca = 'images/bR.png'
+                except:
+                    peca = None
+                cor = 'firebrick4' if (i + j) % 2 == 0 else 'wheat'
+                if peca != None:
+                    botao_peca = sg.Button(size=(4, 3), image_filename=peca, button_color=('tomato', cor), key=(i, j))
                 else:
-                    if peca.tipo == " PIÃO ":
-                        linha.append(str(f'| {peca.tipo}{peca.cor[0]} |'))
-                    else:
-                        linha.append(str(f'| {peca.tipo}{peca.cor[0]} |'))
-            linha.append(f" {i}")
-            mesa.append(linha)
-        return  mesa
+                    botao_peca = sg.Button(size=(4, 3), button_color=('tomato', cor), key=(i, j))
+                linha_tabuleiro.append(botao_peca)
+            tabuleiro_gui.append(linha_tabuleiro)
+        return tabuleiro_gui
     
     def descobre_peca_manipulada(self, posicao_peca):
         coluna = posicao_peca[0]
@@ -424,8 +453,7 @@ class ControleJogo():
     
 
     def mover_peca_jogador(self, cor):
-        posicao_inicial = self.__tela_jogo.solicitar_posicao('inicial')
-        posicao_final = self.__tela_jogo.solicitar_posicao('final')
+        posicao_inicial, posicao_final = self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(self.__tabuleiro))
         x_inicial = posicao_inicial[0]
         y_inicial = posicao_inicial[1]
         x_final = posicao_final[0]
