@@ -6,24 +6,28 @@ import PySimpleGUI as sg
 
 
 class TelaJogo(Tela):
-    def __init__(self) -> None:
-        self.__posicao_inicial = None
-        self.__posicao_final = None
 
     def mostrar_tabuleiro(self, tabuleiro):
         janela = sg.Window('Chess', tabuleiro)
-        self.__posicao_inicial = None
-        self.__posicao_final = None
+        posicao_inicial = None
+        posicao_final = None
         while True:
             evento, valores = janela.read()
             if evento == sg.WINDOW_CLOSED:
                 break
             elif type(evento) == tuple:  # Checking if the event is a tuple, indicating a button click
-                if self.__posicao_inicial is None:
-                    self.__posicao_inicial = evento  # Store the first click
-                elif self.__posicao_final is None:
-                    self.__posicao_final = evento  # Store the second click
-        return self.__posicao_inicial, self.__posicao_final
+                if posicao_inicial is None:
+                    posicao_inicial = evento  # Store the first click
+
+                elif posicao_final is None:
+                    posicao_final = evento  # Store the second click
+
+                    break
+        
+        posicao_inicial = list(posicao_inicial[::-1])
+        posicao_final = list(posicao_final[::-1])
+        janela.close()
+        return posicao_inicial, posicao_final
 
 
     def mostrar_opcoes(self, opcoes, tipo_menu, limpar) -> int:

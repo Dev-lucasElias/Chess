@@ -82,3 +82,4 @@ class Jogo:
         self.__historico_jogadas.append(jogada)
         self.__turno_atual += 1
         self.resultado_tabuleiro = resultado_tabuleiro
+        print('Jogada REGISTRADA corretamente')

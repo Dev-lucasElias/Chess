@@ -19,4 +19,5 @@ class Bispo(Peca):
         movimentos.extend(self.mover_diagonal_superior_direita(casas, tabuleiro, x, y))
         movimentos.extend(self.mover_diagonal_inferior_esquerda(casas, tabuleiro, x, y))
         movimentos.extend(self.mover_diagonal_superior_esquerda(casas, tabuleiro, x, y))
+
         return movimentos

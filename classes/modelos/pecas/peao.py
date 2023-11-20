@@ -80,4 +80,5 @@ class Peao(Peca):
         movimentos.extend(self.mover_cima_peao(casas, tabuleiro, x, y))
         movimentos.extend(self.mover_diagonal_esquerda_peao(casas, tabuleiro, x, y))
         movimentos.extend(self.mover_diagonal_direita_peao(casas, tabuleiro, x, y))
+
         return movimentos

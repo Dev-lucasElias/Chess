@@ -84,7 +84,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == '  REI ':
+                        if self.__tabuleiro[i][j].tipo == 'REI':
                             if self.__tabuleiro[i][j].cor == 'branco':
                                 posicao_rei = self.__tabuleiro[i][j].posicao
                         else:
@@ -101,7 +101,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == '  REI ':
+                        if self.__tabuleiro[i][j].tipo == 'REI':
                             if self.__tabuleiro[i][j].cor == 'preto':
                                 posicao_rei = self.__tabuleiro[i][j].posicao
                         else:
@@ -128,7 +128,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == '  REI ':
+                        if self.__tabuleiro[i][j].tipo == 'REI':
                             if self.__tabuleiro[i][j].cor == 'branco':
                                 rei = self.__tabuleiro[i][j]
                                 movimentos_rei = rei.possiveis_movimentos(self.__tabuleiro)
@@ -146,7 +146,7 @@ class ControleJogo():
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
                         if self.__tabuleiro[i][j].cor == 'preto':
-                            if self.__tabuleiro[i][j].tipo != '  REI ':
+                            if self.__tabuleiro[i][j].tipo != 'REI':
                                 if rei.posicao in self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro):
                                     pecas_perigosas.append(self.__tabuleiro[i][j])
             if len(pecas_perigosas) == 1:
@@ -161,7 +161,7 @@ class ControleJogo():
             for i in range(8):
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
-                        if self.__tabuleiro[i][j].tipo == '  REI ':
+                        if self.__tabuleiro[i][j].tipo == 'REI':
                             if self.__tabuleiro[i][j].cor == 'preto':
                                 rei = self.__tabuleiro[i][j]
                                 movimentos_rei = rei.possiveis_movimentos(self.__tabuleiro)
@@ -179,7 +179,7 @@ class ControleJogo():
                 for j in range(8):
                     if self.__tabuleiro[i][j] != None:
                         if self.__tabuleiro[i][j].cor == 'branco':
-                            if self.__tabuleiro[i][j].tipo != '  REI ':
+                            if self.__tabuleiro[i][j].tipo != 'REI':
                                 if rei.posicao in self.__tabuleiro[i][j].possiveis_movimentos(self.__tabuleiro):
                                     pecas_perigosas.append(self.__tabuleiro[i][j])
             if len(pecas_perigosas) == 1:
@@ -203,7 +203,7 @@ class ControleJogo():
                     self.__jogo_atual = Jogo(jogador, self.__bot_preto,tabuleiro)
                     self.__jogador_1 = jogador
                     self.__jogador_2 = self.__bot_preto
-                    self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))
+
                     self.menu_jogadas_player_bot()
                     break
                 else:
@@ -214,7 +214,6 @@ class ControleJogo():
                 self.__jogador_1 = self.__bot_branco
                 self.__jogador_2 = self.__bot_preto
                 self.__jogo_atual = Jogo(self.__bot_branco, self.__bot_preto,tabuleiro)
-                self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))
                 self.simulacao()
                 break
             elif opcao_escolhida == 3: #Player Vs Player
@@ -227,7 +226,7 @@ class ControleJogo():
                     self.__jogo_atual = Jogo(jogador_1, jogador_2,tabuleiro)
                     self.__jogador_1 = jogador_1
                     self.__jogador_2 = jogador_2
-                    self.__tela_jogo.mostrar_tabuleiro(self.gerar_foto_tabuleiro(tabuleiro))
+
                     self.menu_jogadas_player_player()
                     break
                 else:
@@ -254,15 +253,13 @@ class ControleJogo():
                     self.__tela_jogo.notifica_usuario(msg,1.5)
                     if finalizou_ou_nao:
                         self.finalizar_partida(1,"Xeque_mate")       
-                foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
-                self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
-                time.sleep(random.uniform(0.5,1.0))
+
+                time.sleep(0.5)
                 msg_bot, finalizou_ou_nao_bot = self.mover_peca_bot(self.__bot_preto,"preto")
                 if finalizou_ou_nao_bot:
                     self.finalizar_partida(2,"Xeque_Mate")
                 self.__tela_jogo.notifica_usuario(msg_bot,1.0)
-                foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
-                self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
+
             elif opcao_escolhida == 2:
                 self.finalizar_partida(2, "Desistencia")
                 break
@@ -293,7 +290,7 @@ class ControleJogo():
                 #********************* mostra tabuleiro *****************************
             self.__tela_jogo.notifica_usuario(msg,1.5)
             foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)  
-            self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
+
                 #********************* vez das pretas *****************************
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu_preto, False)
             if opcao_escolhida == 1: 
@@ -312,7 +309,7 @@ class ControleJogo():
                  #********************* mostra tabuleiro *****************************
             self.__tela_jogo.notifica_usuario(msg,1.5)
             foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)  
-            self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
+
 
 
     def simulacao(self):
@@ -324,24 +321,22 @@ class ControleJogo():
             if finalizou_ou_nao_bot_branco:
                 self.finalizar_partida(1,"Xeque_Mate")
             #self.__tela_jogo.notifica_usuario(msg_bot,0.02)
-            foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
-            self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
+
             #***************************** vez das Pretas ***************************************
            # time.sleep(random.uniform(0.05,0.06))
             msg_bot, finalizou_ou_nao_bot_preto = self.mover_peca_bot(self.__bot_preto,"preto")
             if finalizou_ou_nao_bot_preto:
                 self.finalizar_partida(2,"Xeque_Mate")
             #self.__tela_jogo.notifica_usuario(msg_bot,0.02)
-            foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)
-            self.__tela_jogo.mostrar_tabuleiro(foto_tabuleiro)
+
             contador +=1
 
     def gerar_foto_tabuleiro(self, tabuleiro):
         tabuleiro_gui = list()
         i = -1
-        j = -1
         for linha in tabuleiro:
             i += 1
+            j = -1
             linha_tabuleiro = list()
             peca = None
             for posicao in linha:
@@ -377,9 +372,9 @@ class ControleJogo():
                     peca = None
                 cor = 'firebrick4' if (i + j) % 2 == 0 else 'wheat'
                 if peca != None:
-                    botao_peca = sg.Button(size=(4, 3), image_filename=peca, button_color=('tomato', cor), key=(i, j))
+                    botao_peca = sg.Button(size=(5, 4), image_filename=peca, button_color=('tomato', cor), key=(j, i))
                 else:
-                    botao_peca = sg.Button(size=(4, 3), button_color=('tomato', cor), key=(i, j))
+                    botao_peca = sg.Button(size=(5, 4), button_color=('tomato', cor), key=(j, i))
                 linha_tabuleiro.append(botao_peca)
             tabuleiro_gui.append(linha_tabuleiro)
         return tabuleiro_gui
@@ -458,6 +453,7 @@ class ControleJogo():
         y_inicial = posicao_inicial[1]
         x_final = posicao_final[0]
         y_final = posicao_final[1]
+
         if self.__tabuleiro[x_inicial][y_inicial] == None:
             return False,'A posição está vazia, selecione uma peça', False
         if self.__tabuleiro[x_inicial][y_inicial].cor != cor:

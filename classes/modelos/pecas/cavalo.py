@@ -166,4 +166,5 @@ class Cavalo(Peca):
         movimentos.extend(self.mover_esquerda2_cavalo(tabuleiro, x, y))
         movimentos.extend(self.mover_direita1_cavalo(tabuleiro, x, y))
         movimentos.extend(self.mover_direita2_cavalo(tabuleiro, x, y))
+
         return movimentos

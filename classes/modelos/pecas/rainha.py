@@ -23,6 +23,7 @@ class Rainha(Peca):
         movimentos.extend(self.mover_reto_cima(casas, tabuleiro, x, y))
         movimentos.extend(self.mover_reto_esquerda(casas, tabuleiro, x, y))
         movimentos.extend(self.mover_reto_direita(casas, tabuleiro, x, y))
+
         return movimentos
     
 
