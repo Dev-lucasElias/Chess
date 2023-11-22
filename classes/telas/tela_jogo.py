@@ -29,41 +29,109 @@ class TelaJogo(Tela):
         janela.close()
         return posicao_inicial, posicao_final
 
+    def gerar_foto_tabuleiro(self, tabuleiro):
+        tabuleiro_gui = list()
+        i = -1
+        for linha in tabuleiro:
+            i += 1
+            j = -1
+            linha_tabuleiro = list()
+            peca = None
+            for posicao in linha:
+                j += 1
+                try:
+                    if posicao.cor == 'branco':
+                        if posicao.tipo == 'BISPO':
+                            peca = 'images/wB.png'
+                        if posicao.tipo == 'CAVALO':
+                            peca = 'images/wN.png'
+                        if posicao.tipo == 'PEAO':
+                            peca = 'images/wp.png'
+                        if posicao.tipo == 'RAINHA':
+                            peca = 'images/wQ.png'
+                        if posicao.tipo == 'REI':
+                            peca = 'images/wK.png'
+                        if posicao.tipo == 'TORRE':
+                            peca = 'images/wR.png'
+                    if posicao.cor == 'preto':
+                        if posicao.tipo == 'BISPO':
+                            peca = 'images/bB.png'
+                        if posicao.tipo == 'CAVALO':
+                            peca = 'images/bN.png'
+                        if posicao.tipo == 'PEAO':
+                            peca = 'images/bp.png'
+                        if posicao.tipo == 'RAINHA':
+                            peca = 'images/bQ.png'
+                        if posicao.tipo == 'REI':
+                            peca = 'images/bK.png'
+                        if posicao.tipo == 'TORRE':
+                            peca = 'images/bR.png'
+                except:
+                    peca = None
+                cor = 'firebrick4' if (i + j) % 2 == 0 else 'wheat'
+                if peca != None:
+                    botao_peca = sg.Button(size=(5, 4), image_filename=peca, button_color=('tomato', cor), key=(j, i))
+                else:
+                    botao_peca = sg.Button(size=(5, 4), button_color=('tomato', cor), key=(j, i))
+                linha_tabuleiro.append(botao_peca)
+            tabuleiro_gui.append(linha_tabuleiro)
+        return tabuleiro_gui
 
     def mostrar_opcoes(self, opcoes, tipo_menu, limpar) -> int:
         return super().mostrar_opcoes(opcoes, tipo_menu, limpar)
     
     def solicitar_jogador(self, numero) ->str:
-        nome_jogador = input(f"                por favor digite o nome do jogador {numero} para começar a partida: ")
-        self.limpar_tela()
-        return nome_jogador
-    
+        layout = [
+        [sg.Text(f"Por favor, digite o nome do jogador {numero} para começar a partida:")],
+        [sg.InputText(key='nome')],
+        [sg.Button('OK'), sg.Button('Cancelar')]
+        ]
+
+        window = sg.Window('Solicitar Jogador', layout)
+
+        while True:
+            event, values = window.read()
+
+            if event == sg.WIN_CLOSED or event == 'Cancelar':
+                window.close()
+                return None
+
+            if event == 'OK':
+                nome_jogador = values['nome']
+                window.close()
+                return nome_jogador
+
     def notifica_usuario(self, menssagem, tempo):
         print(f"{menssagem}")
         time.sleep(tempo)
     
-    def gerar_relatorio(self,jogador1,jogador2, quem_ganhou, motivo, historico_jogadas, quantos_turnos):
-        try:
-            print(f"""
-              ***************  RELATORIO DE JOGO ***************
-            
-            Jogadores: {jogador1} e {jogador2}
-            Vencedor: {quem_ganhou}
-            motivo: {motivo}
-            Quantos turnos: {quantos_turnos}
-            
-                        ------ Historico de jogadas ------
-            
-            """)
+    def gerar_relatorio(self, jogador1, jogador2, quem_ganhou, motivo, historico_jogadas, quantos_turnos):
+        layout = [
+            [sg.Text("***************  RELATORIO DE JOGO ***************")],
+            [sg.Text(f"Jogadores: {jogador1} e {jogador2}")],
+            [sg.Text(f"Vencedor: {quem_ganhou}")],
+            [sg.Text(f"Motivo: {motivo}")],
+            [sg.Text(f"Quantos turnos: {quantos_turnos}")],
+            [sg.Text("------ Histórico de Jogadas ------")],
+            [sg.Multiline("", size=(50, 10), key='historico', disabled=True)],
+            [sg.Button('OK')]
+        ]
 
-            for i in historico_jogadas:
-                print(f"""                 T: {i.turno_jogada} - Jogador: {i.jogador.nome}, Peça selecionada: {i.peca.tipo}, Movimento: [{i.posicao_inicial},{i.posicao_final}]
-                    """)
-                
-            print("                 -------------------------------------------------------------------")
+        window = sg.Window('Relatório de Jogo', layout)
 
-        except Exception as e:
-            raise relatorioError from e
+        historico_texto = ""
+
+        for i in historico_jogadas:
+            historico_texto += f"T: {i.turno_jogada} - Jogador: {i.jogador.nome}, Peça selecionada: {i.peca.tipo}, Movimento: [{i.posicao_inicial},{i.posicao_final}]\n"
+
+        window['historico'].update(historico_texto)
+
+        while True:
+            event, values = window.read()
+
+            if event == sg.WIN_CLOSED or event == 'OK':
+                window.close()
+                break
         
     def gerar_historico_partidas(self,historico_partidas):
         try:

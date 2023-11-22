@@ -8,20 +8,28 @@ class Tela(ABC):
     @abstractmethod
     def mostrar_opcoes(self, opcoes, tipo_menu, limpar) -> int:
         try:
-            print(f"""
-            ****  MENU {tipo_menu} ****
-                                                
-                Escolha uma opcão:
-                    """)
-            for i in range(len(opcoes)):
-                print(f"                {i+1} - {opcoes[i]}")
+            layout = [
+                [sg.Text(f"****  MENU {tipo_menu} ****", font=("Helvetica", 25))],
+            ]
 
-            opcao_escolhida = self.verifica_numero_inteiro("""
-                opção ecolhida: ""","1 e 2 ")                                    
-            if limpar :
-                self.limpar_tela()
-            return opcao_escolhida
-        
+            for i in range(len(opcoes)):
+                layout.append([sg.Button(f"{i+1}  -  {opcoes[i]}")])
+
+            window = sg.Window('Chess', layout, font=("Helvetica", 12))
+
+            while True:
+                event, values = window.read()
+
+                if event == sg.WIN_CLOSED or ' - ' in event:
+                    break
+
+        except:Exception
+        try:
+            opcao_escolhida = int(event[0])
+            if 1 <= opcao_escolhida <= len(opcoes):
+                window.close()
+                return opcao_escolhida
+            
         except:Exception
 
 
