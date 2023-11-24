@@ -33,15 +33,16 @@ class Tela(ABC):
         except:Exception
 
 
-    def verifica_numero_inteiro(self,mensagem, inteiros_validos):
+    def verifica_numero_inteiro(self, mensagem, inteiros_validos):
         while True:
             try:
-                input_manual = input(mensagem)
+                input_manual = sg.popup_get_text(mensagem)
                 input_manual_em_int = int(input_manual)
-                return input_manual_em_int
+                if input_manual_em_int in inteiros_validos:
+                    return input_manual_em_int
+                else:
+                    sg.popup_error(f"Você digitou um valor incorreto. Valores inteiros válidos: {inteiros_validos}", title="Erro")
             except ValueError:
-                print("                voce digitou valores incorretos, por favor, insira novamente.")
-                print(f"                valore inteiros validos : {inteiros_validos}")
-
+                sg.popup_error("Você digitou um valor incorreto. Por favor, insira novamente.", title="Erro")
     def limpar_tela(self):
         os.system('cls' if os.name == 'nt' else 'clear') or None

@@ -101,9 +101,8 @@ class TelaJogo(Tela):
                 window.close()
                 return nome_jogador
 
-    def notifica_usuario(self, menssagem, tempo):
-        print(f"{menssagem}")
-        time.sleep(tempo)
+    def notifica_usuario(self, mensagem, tempo):
+        sg.popup_quick_message(mensagem, title="Notificação", auto_close_duration=tempo * 1000)
     
     def gerar_relatorio(self, jogador1, jogador2, quem_ganhou, motivo, historico_jogadas, quantos_turnos):
         layout = [
@@ -135,18 +134,36 @@ class TelaJogo(Tela):
         
     def gerar_historico_partidas(self,historico_partidas):
         try:
-            for i in historico_partidas:
-                print(f"""
-                *****  RELATORIO DE JOGO ****
-                
-                Jogadores: {i.jogador_1.nome} vs {i.jogador_2.nome}
-                Vencedor: {i.quem_ganhou}
-                motivo: {i.motivo}
-                Quantos turnos: {i.turno_atual}
-                
-                -- historico de jogadas --
-                
-                """)
+            layout = []
+
+            for partida in historico_partidas:
+                layout_partida = [
+                    [sg.Text("*****  RELATORIO DE JOGO ****")],
+                    [sg.Text(f"Jogadores: {partida.jogador_1.nome} vs {partida.jogador_2.nome}")],
+                    [sg.Text(f"Vencedor: {partida.quem_ganhou}")],
+                    [sg.Text(f"Motivo: {partida.motivo}")],
+                    [sg.Text(f"Quantos turnos: {partida.turno_atual}")],
+                    [sg.Text('-- Histórico de Jogadas --')],
+                    [sg.Multiline("", size=(50, 10), key=f'historico_partida_{partida.id}', disabled=True)],
+                    [sg.Button('OK')]
+                ]
+
+                historico_texto = ""
+
+                for jogada in partida.historico_jogadas:
+                    historico_texto += f"T: {jogada.turno_jogada} - Jogador: {jogada.jogador.nome}, Peça selecionada: {jogada.peca.tipo}, Movimento: [{jogada.posicao_inicial},{jogada.posicao_final}]\n"
+
+                layout_partida[-2].update(historico_texto)
+                layout.extend(layout_partida)
+
+            window = sg.Window('Histórico de Partidas', layout)
+
+            while True:
+                event, values = window.read()
+
+                if event == sg.WIN_CLOSED or event == 'OK':
+                    window.close()
+                    break
         except Exception as e:
             raise relatorioError from e    
         

@@ -1,5 +1,6 @@
 from classes.telas.tela import Tela
 import time
+import PySimpleGUI as sg
 
 class TelaRegras(Tela):
     def __init__(self, controlador_central) -> None:
@@ -12,51 +13,57 @@ class TelaRegras(Tela):
         self.__controlador_central.inicia_programa()
 
     def diferencas(self):
+        layout = [
+            [sg.Text('Diferente do xadrez tradicional, nosso xadrez simplificado')],
+            [sg.Text('não possui regras especiais, como: rock, em peasant, transformação do peão')],
+            [sg.Text('e peão movendo duas casas na primeira jogada.')],
+            [sg.Text('Além dessas mudanças, a principal diferença é que o nosso jogo')],
+            [sg.Text('permite o sacrifício do Rei, criando oportunidades de jogadas novas')],
+            [sg.Text('e armadilhas criativas. Se divirta!')],
+            [sg.Button('Voltar')]
+        ]
+
+        window = sg.Window('Diferenças do Jogo', layout)
+
         while True:
-            self.limpar_tela()
-            print('Diferente do xadrez tradicional, nosso xadrez simplificado \n'
-                  'não possui regras especiais, como: rock, em peasant, transformação do peão \n'
-                  'e peão movendo duas casas na primeira jogada. \n'
-                  'Além dessas mudanças, a principal diferença é que o nosso jogo \n'
-                  'permite o sácrificio do Rei, criando oportunidades de jogadas novas \n'
-                  'e armadilhas criativas. Se divirta!')
-            for _ in range(3):
-                print()
-            voltar = input('Aperte a tecla "ENTER" para voltar:')
-            if voltar == '':
+            event, values = window.read()
+
+            if event == sg.WIN_CLOSED or event == 'Voltar':
+                window.close()
                 self.limpar_tela()
                 self.mostrar_regras()
                 break
-            else:
-                self.limpar_tela()
-                print('tente novamente')
-                time.sleep(1.5)
+
+        window.close()
     
     def tutorial(self):
+        layout = [
+            [sg.Text('Para jogar, primeiro cadastre seu jogador dentro do "Menu Jogador"')],
+            [sg.Text('Em seguida, volte para a tela inicial e abra o "Menu Partida".')],
+            [sg.Text('Dentro desse menu, você terá diversos estilos de jogo, basta escolher')],
+            [sg.Text('o seu favorito para dar início à partida.')],
+            [sg.Text('Dentro da partida, a cada turno, haverá a opção de fazer uma jogada ou')],
+            [sg.Text('desistir no meio. Selecione jogar e então digite a posição da peça')],
+            [sg.Text('que quer mover e então a posição em que ela deve ir. As posições')],
+            [sg.Text('são compostas por uma letra entre "A" e "H" e um número entre "0" e "7",')],
+            [sg.Text('por exemplo: "b1" ou "c6".')],
+            [sg.Text('Após cada jogada, será o turno do adversário e então o seu novamente,')],
+            [sg.Text('continue jogando até ganhar. Boa sorte! :)')],
+            [sg.Button('Voltar')]
+        ]
+
+        window = sg.Window('Tutorial', layout)
+
         while True:
-            self.limpar_tela()
-            print('Para jogar, primeiro cadastre seu jogador dentro do "Menu Jogador", \n'
-                  'em seguida volte para a tela inicial e abra o "Menu Partida", \n'
-                  'dentro desse menu você terá diversos estilos de jogo, basta escolher \n'
-                  'escolher o seu favorito para dar início a partida. \n'
-                  'Dentro da partida, a cada turno haverá a opção de fazer uma jogada ou \n'
-                  'desistir no meio. Selecione jogar, e então digite a posição da peça \n'
-                  'que quer mover, e então a posição em que ela deve ir. As posições \n'
-                  'são compostas por uma letra entre "A" e "H" e um número entre "0" e "7", \n'
-                  'por exemplo: "b1" ou "c6". \n'
-                  'Após cada jogada será o turno do adversário e então o seu novamente, \n'
-                  'continue jogando até ganhar, boa sorte! :)')
-            for _ in range(3):
-                print()
-            voltar = input('Aperte a tecla "ENTER" para voltar:')
-            if voltar == '':
+            event, values = window.read()
+
+            if event == sg.WIN_CLOSED or event == 'Voltar':
+                window.close()
                 self.limpar_tela()
                 self.mostrar_regras()
                 break
-            else:
-                self.limpar_tela()
-                print('tente novamente')
-                time.sleep(1.5)
+
+        window.close()
 
     
     def mostrar_regras(self):
