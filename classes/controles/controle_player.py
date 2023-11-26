@@ -52,4 +52,4 @@ class ControlePlayer:
             elif opcao_escolhida == 4: #voltar ao menu anterior
                 self.voltar_menu_central()
             else:
-                print("Opção escolhida invalida")
+                break
