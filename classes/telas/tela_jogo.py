@@ -1,7 +1,7 @@
 from classes.telas.tela import Tela
 from classes.modelos.jogada import Jogada
 from classes.excepitions.relatorioError import relatorioError
-import time
+import sys
 import PySimpleGUI as sg
 
 
@@ -14,7 +14,7 @@ class TelaJogo(Tela):
         while True:
             evento, valores = janela.read()
             if evento == sg.WINDOW_CLOSED:
-                break
+                sys.exit()
             elif type(evento) == tuple:  # Checking if the event is a tuple, indicating a button click
                 if posicao_inicial is None:
                     posicao_inicial = evento  # Store the first click
@@ -67,12 +67,12 @@ class TelaJogo(Tela):
                         if posicao.tipo == 'TORRE':
                             peca = 'images/bR.png'
                 except:
-                    peca = None
+                    peca = 'images/blank.png'
                 cor = 'firebrick4' if (i + j) % 2 == 0 else 'wheat'
                 if peca != None:
-                    botao_peca = sg.Button(size=(5, 4), image_filename=peca, button_color=('tomato', cor), key=(j, i))
+                    botao_peca = sg.Button(size=(1, 1), image_filename=peca, button_color=('tomato', cor), key=(j, i))
                 else:
-                    botao_peca = sg.Button(size=(5, 4), button_color=('tomato', cor), key=(j, i))
+                    botao_peca = sg.Button(size=(1, 1), button_color=('tomato', cor), key=(j, i))
                 linha_tabuleiro.append(botao_peca)
             tabuleiro_gui.append(linha_tabuleiro)
         return tabuleiro_gui
@@ -92,9 +92,12 @@ class TelaJogo(Tela):
         while True:
             event, values = window.read()
 
-            if event == sg.WIN_CLOSED or event == 'Cancelar':
+            if event == 'Cancelar':
                 window.close()
                 return None
+
+            if event == sg.WINDOW_CLOSED:
+                sys.exit()
 
             if event == 'OK':
                 nome_jogador = values['nome']
@@ -102,7 +105,7 @@ class TelaJogo(Tela):
                 return nome_jogador
 
     def notifica_usuario(self, mensagem, tempo):
-        sg.popup_quick_message(mensagem, title="Notificação", auto_close_duration=tempo * 1000)
+        sg.popup_quick_message(mensagem, title="Notificação", auto_close_duration=0.5)
     
     def gerar_relatorio(self, jogador1, jogador2, quem_ganhou, motivo, historico_jogadas, quantos_turnos):
         layout = [
@@ -117,6 +120,7 @@ class TelaJogo(Tela):
         ]
 
         window = sg.Window('Relatório de Jogo', layout)
+        window.finalize()
 
         historico_texto = ""
 
@@ -128,44 +132,43 @@ class TelaJogo(Tela):
         while True:
             event, values = window.read()
 
-            if event == sg.WIN_CLOSED or event == 'OK':
+            if event == 'OK':
                 window.close()
                 break
+
+            if event == sg.WINDOW_CLOSED:
+                sys.exit()
         
     def gerar_historico_partidas(self,historico_partidas):
+        historico_text = ""
         try:
-            layout = []
-
-            for partida in historico_partidas:
-                layout_partida = [
-                    [sg.Text("*****  RELATORIO DE JOGO ****")],
-                    [sg.Text(f"Jogadores: {partida.jogador_1.nome} vs {partida.jogador_2.nome}")],
-                    [sg.Text(f"Vencedor: {partida.quem_ganhou}")],
-                    [sg.Text(f"Motivo: {partida.motivo}")],
-                    [sg.Text(f"Quantos turnos: {partida.turno_atual}")],
-                    [sg.Text('-- Histórico de Jogadas --')],
-                    [sg.Multiline("", size=(50, 10), key=f'historico_partida_{partida.id}', disabled=True)],
-                    [sg.Button('OK')]
-                ]
-
-                historico_texto = ""
-
-                for jogada in partida.historico_jogadas:
-                    historico_texto += f"T: {jogada.turno_jogada} - Jogador: {jogada.jogador.nome}, Peça selecionada: {jogada.peca.tipo}, Movimento: [{jogada.posicao_inicial},{jogada.posicao_final}]\n"
-
-                layout_partida[-2].update(historico_texto)
-                layout.extend(layout_partida)
-
-            window = sg.Window('Histórico de Partidas', layout)
-
-            while True:
-                event, values = window.read()
-
-                if event == sg.WIN_CLOSED or event == 'OK':
-                    window.close()
-                    break
+            for i in historico_partidas:
+                historico_text += (
+                    f"***** RELATORIO DE JOGO *****\n\n"
+                    f"Jogadores: {i.jogador_1.nome} vs {i.jogador_2.nome}\n"
+                    f"Vencedor: {i.quem_ganhou}\n"
+                    f"motivo: {i.motivo}\n"
+                    f"Quantos turnos: {i.turno_atual}\n\n"
+                    "-- historico de jogadas --\n\n"
+                )
         except Exception as e:
-            raise relatorioError from e    
+            raise relatorioError from e
+
+        layout = [[sg.Text("Histórico de Partidas")],
+                  [sg.Multiline(historico_text, size=(50, 10), disabled=True)],
+                  [sg.Button("Fechar")]]
+
+        window = sg.Window("Histórico de Partidas", layout)
+
+        while True:
+            event, values = window.read()
+
+            if event == 'Fechar':
+                break
+            if event == sg.WINDOW_CLOSED:
+                sys.exit()
+
+        window.close()
         
     
     def solicitar_posicao(self, tipo) -> list:

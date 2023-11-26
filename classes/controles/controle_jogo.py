@@ -10,6 +10,7 @@ from classes.modelos.player import Player
 #from classes.controles.controle_player import Player
 import random
 import time
+import pickle
 #from classes.controles.controle_central import ControleCentral
 
 class ControleJogo():
@@ -21,14 +22,28 @@ class ControleJogo():
         self.__jogador_2 = Player(None,None)
         self.__jogo_atual = Jogo(None,None,None)
         self.__bot_preto = Player("BOT_preto", "000000000")
-        self.__historico_partidas = []
+        self.__historico_partidas = self.load_game_history()
         self.__bot_branco = Player("BOT_Branco", "999999999")
 
     @property
     def tabuleiro(self):
         return self.__tabuleiro
     
-    
+    def save_game_history(self, file_name='game_history.pkl'):
+        """Saves the game history to a file."""
+        with open(file_name, 'wb') as file:
+            pickle.dump(self.__historico_partidas, file)
+        print("Game history saved successfully.")
+
+    def load_game_history(self, file_name='game_history.pkl'):
+        """Loads the game history from a file and returns it."""
+        try:
+            with open(file_name, 'rb') as file:
+                return pickle.load(file)
+        except (FileNotFoundError, EOFError, pickle.UnpicklingError) as e:
+            print(f"Error loading game history: {e}")
+            return []
+
     #seta o atributo posicao de cada peca no tabuleiro para sua posicao [i][j] na matriz
     #sincronizando o atributo posicao com sua posicao real no tabuleiro
     def sincronizar_posicoes_tabuleiro(self) -> None:
@@ -74,7 +89,7 @@ class ControleJogo():
             tabuleiro[1][i] = Peao('preto', [1, i])
 
         return tabuleiro
-    
+
     def verifica_cheque(self) -> bool:
         ameacas_rei = list()
         posicao_rei = None
@@ -191,7 +206,7 @@ class ControleJogo():
 
     def abre_tela_jogo(self):
         possiveis_escolhas = [" Iniciar Partida contra BOT"," Iniciar simulacao entre dois BOT's"," Iniciar Player vs Player"," Imprimir historico de partidas"," voltar"]
-        tipo_menu = "JOGADOR"
+        tipo_menu = "JOGO"
         while True:
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu, True)
             if opcao_escolhida == 1:# contra BOT
@@ -237,8 +252,7 @@ class ControleJogo():
                 self.__controlador_central.inicia_programa()
                 break
             else:
-                msg = "digite uma opcao valida! "
-                self.__tela_jogo.notifica_usuario(msg,1.5)
+                break
 
     def menu_jogadas_player_bot(self):
         possiveis_escolhas = [" Jogar"," Desistir da partida"]
@@ -263,8 +277,7 @@ class ControleJogo():
                 self.finalizar_partida(2, "Desistencia")
                 break
             else:
-                msg = "digite uma opcao valida! "
-                self.__tela_jogo.notifica_usuario(msg,1.5)
+                break
 
     def menu_jogadas_player_player(self):
         possiveis_escolhas = [" Jogar"," Desistir da partida"]
@@ -284,11 +297,9 @@ class ControleJogo():
                 self.finalizar_partida(1, "Desistencia")
                 break
             else:
-                msg = "digite uma opcao valida! "
-                self.__tela_jogo.notifica_usuario(msg,1.5)
+                break
                 #********************* mostra tabuleiro *****************************
-            self.__tela_jogo.notifica_usuario(msg,1.5)
-            foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)  
+
 
                 #********************* vez das pretas *****************************
             opcao_escolhida = self.__tela_jogo.mostrar_opcoes(possiveis_escolhas,tipo_menu_preto, False)
@@ -303,11 +314,9 @@ class ControleJogo():
                 self.finalizar_partida(2, "Desistencia")
                 break
             else:
-                msg = "digite uma opcao valida! "
-                self.__tela_jogo.notifica_usuario(msg,1.5)
+                break
                  #********************* mostra tabuleiro *****************************
-            self.__tela_jogo.notifica_usuario(msg,1.5)
-            foto_tabuleiro = self.gerar_foto_tabuleiro(self.__tabuleiro)  
+
 
 
 
@@ -338,6 +347,7 @@ class ControleJogo():
     
     def finalizar_partida(self,numero_ganhador, motivo):
         self.__historico_partidas.append(self.__jogo_atual)
+        self.save_game_history()
         self.__tabuleiro = self.gerar_tabuleiro()
         if numero_ganhador == 1:
             quem_ganhou = self.__jogador_1.nome

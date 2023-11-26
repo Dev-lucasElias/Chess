@@ -1,5 +1,6 @@
 from classes.telas.tela import Tela
 import PySimpleGUI as sg
+import sys
 
 class TelaPlayer(Tela):
     def mostrar_opcoes(self, opcoes, tipo_menu, limpar) -> int:
@@ -20,9 +21,11 @@ class TelaPlayer(Tela):
 
             while True:
                 event, values = janela.read()
-
-                if event == sg.WIN_CLOSED or event == 'Fechar':
+                if event == 'Fechar':
                     break
+
+                if event == sg.WINDOW_CLOSED:
+                    sys.exit()
             janela.close()
 
         else:
@@ -38,10 +41,14 @@ class TelaPlayer(Tela):
         janela = sg.Window('chess',layout)
         while True:
             event, values = janela.read()
-
-            if event == sg.WIN_CLOSED or event == 'cancelar':
+            
+            if event == 'cancelar':
                 janela.close()
                 return None, None
+
+            if event == sg.WINDOW_CLOSED:
+                sys.exit()
+
             elif event == 'Enviar':
                 nome_novo_jogador = values['nome']
                 cpf_novo_jogador = values['cpf']
@@ -61,10 +68,12 @@ class TelaPlayer(Tela):
 
         while True:
             event, values = window.read()
-
-            if event == sg.WIN_CLOSED or event == 'Cancelar':
+            if event == 'Cancelar':
                 window.close()
                 return None  # Retorna None se o usuário cancelar a entrada de dados
+
+            if event == sg.WINDOW_CLOSED:
+                sys.exit()
 
             if event == 'OK':
                 nome_jogador = values['nome']

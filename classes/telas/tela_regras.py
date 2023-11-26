@@ -1,5 +1,5 @@
 from classes.telas.tela import Tela
-import time
+import sys
 import PySimpleGUI as sg
 
 class TelaRegras(Tela):
@@ -28,11 +28,14 @@ class TelaRegras(Tela):
         while True:
             event, values = window.read()
 
-            if event == sg.WIN_CLOSED or event == 'Voltar':
+            if event == 'Voltar':
                 window.close()
                 self.limpar_tela()
                 self.mostrar_regras()
                 break
+
+            if event == sg.WINDOW_CLOSED:
+                sys.exit()
 
         window.close()
     
@@ -56,12 +59,14 @@ class TelaRegras(Tela):
 
         while True:
             event, values = window.read()
-
-            if event == sg.WIN_CLOSED or event == 'Voltar':
+            if event == 'Voltar':
                 window.close()
                 self.limpar_tela()
                 self.mostrar_regras()
                 break
+
+            if event == sg.WINDOW_CLOSED:
+                sys.exit()
 
         window.close()
 
@@ -81,5 +86,4 @@ class TelaRegras(Tela):
             elif opcao_escolhida == 3:
                 self.voltar_menu_central()
             else:
-                print("Opção invalida")
-                time.sleep(1.5)
+                break

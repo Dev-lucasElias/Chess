@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import os
 from classes.excepitions.relatorioError import relatorioError
 import PySimpleGUI as sg
+import sys
 
 class Tela(ABC):
 
@@ -20,8 +21,11 @@ class Tela(ABC):
             while True:
                 event, values = window.read()
 
-                if event == sg.WIN_CLOSED or ' - ' in event:
-                    break
+                if event == sg.WINDOW_CLOSED:
+                    sys.exit()
+
+                if ' - ' in event:
+                    sys.exit()
 
         except:Exception
         try:
